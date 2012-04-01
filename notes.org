@@ -1,0 +1,20 @@
+* To do list for Atomic
+*** TODO Make Makefile.am suppress warnings AND work with javac and gcj
+*** TODO Suppress warnings when rebuilding Makefile from Makefile.am
+*** TODO Make Makefile.am move static resources from src into classes
+*** TODO Figure out how to insert an XSL stylesheet link into service and feed documents
+*** TODO Do I need separate XSL stylesheets for service and feed docs, or can I just have one?
+*** TODO Create a BitBucket repository for all this stuff and start using version control.
+*** TODO Figure out ODATA encoding for feed property data.
+*** TODO Set up configuration for Atomic and Cosmotron.
+    - Each looks for a properties file (e.g. atomic.properties, cosmotron.properties)
+    - Loads properties file if it's there.
+    - Uses hard-coded defaults if not there.
+    - Also can override properties using java's -D switches.
+    - But, provide a command-line parameter so you can specify the properties file.
+*** TODO Figure out how to use InputStreams/OutputStreams with HttpClient.
+*** TODO Possible to compile all resources including dependencies into one Jar file?
+*** TODO Use CSS to dress up the final HTML significantly.
+*** TODO Start writing Texinfo docs.
+*** TODO Strip out lightweight object model in favor of simple data structures.
+
