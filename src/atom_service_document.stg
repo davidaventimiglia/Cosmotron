@@ -1,0 +1,59 @@
+group atom_service_document;
+
+delimiters "$", "$"
+
+SERVICEDOC(servicedoc) ::= <<
+<service xml:base="http://services.odata.org/OData/OData.svc/"
+	 xmlns:atom="http://www.w3.org/2005/Atom"
+	 xmlns:app="http://www.w3.org/2007/app">
+  $servicedoc.workspaces:WORKSPACE()$ 
+</service>
+
+>>
+
+WORKSPACE(workspace) ::= <<
+
+<workspace> 
+  $workspace.title:TITLE()$
+  $workspace.collections:ATOMCOLLECTION()$
+</workspace>
+>>
+
+ATOMCOLLECTION(atomcollection) ::= <<
+
+<collection href="$workspace.title$/$atomcollection.href$"> 
+  $atomcollection.title:TITLE()$
+  $atomcollection.accepts:ACCEPT()$
+  $atomcollection.categories:CATEGORY()$
+</collection>
+>>
+
+TITLE(title) ::= <<
+<atom:title>$title$</atom:title>
+>>
+
+ACCEPT(accept) ::= <<
+<accept>$accept.mimetype$</accept>
+>>
+
+CATEGORY(category) ::= <<
+<atom:category term="$category.term$" scheme="$category.schema$" label="$category.label$"/>
+>>
+
+LINK(link) ::= <<
+<link rel="edit" title="" href="link"/>
+>>
+
+PERSON(person) ::= <<
+<author>
+  <name>$author$</name>
+</author>
+>>
+
+UPDATED(updated) ::= <<
+<updated>$updated$</updated>
+>>
+
+ID(id) ::= <<
+<id>$id$</id>
+>>

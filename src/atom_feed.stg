@@ -1,0 +1,125 @@
+group atom_feed;
+
+delimiters "$", "$"
+
+FEED(feed) ::= <<
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<feed xml:base="http://services.odata.org/OData/OData.svc/"
+      xmlns:d="http://schemas.microsoft.com/ado/2007/08/dataservices"
+      xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata"
+      xmlns="http://www.w3.org/2005/Atom">
+  $feed.id:ID()$
+  $feed.title:TITLE()$
+  $feed.updated:UPDATED()$
+  $feed.authors:PERSON()$
+  $feed.links:LINK()$
+  $feed.categories:CATEGORY()$
+  $feed.contributors:PERSON()$
+  $feed.generator:GENERATOR()$
+  $feed.icon:ICON()$
+  $feed.logo:LOGO()$
+  $feed.rights:RIGHTS()$
+  $feed.subtitle:SUBTITLE()$
+  $feed.entries:ENTRY()$
+</feed>
+
+>>
+
+ENTRY(entry) ::= <<
+<entry>
+  $entry.id:ID()$
+  $entry.title:TITLE()$
+  $entry.updated:UPDATED()$
+  $entry.authors:PERSON()$
+  $entry:CONTENT()$
+  $entry.links:LINK()$
+  $entry.summary:SUMMARY()$
+  $entry.categories:CATEGORY()$
+  $entry.contributors:PERSON()$
+  $entry.published:PUBLISHED()$
+  $entry.source:SOURCE()$
+  $entry.rights:RIGHTS()$
+</entry>
+>>
+
+CONTENT(entry) ::= <<
+  <content type="application/xml">
+    <m:properties>
+      $entry.content.keys,entry.content.values:{n,v|$PROPERTY(n, v)$}$
+    </m:properties>
+  </content>
+>>
+
+PROPERTY(name, value) ::= <<
+
+<d:$name$>$value$</d:$name$>
+>>
+
+ID(id) ::= <<
+<id>$id$</id>
+>>
+
+TITLE(title) ::= <<
+<title>$title$</title>
+>>
+
+UPDATED(updated) ::= <<
+<updated>$updated$</updated>
+>>
+
+CATEGORY(category) ::= <<
+<category term="$category.term$" scheme="$category.schema$" label="$category.label$"/>
+>>
+
+LINK(link) ::= <<
+<link rel="edit" title="" href="link"/>
+>>
+
+PERSON(person) ::= <<
+<author>
+  <name>$person$</name>
+</author>
+>>
+
+TEXT(text) ::= <<
+$text$
+>>
+
+GENERATOR(generator) ::= <<
+<generator uri="$generator.uri$" version="$generator.version$">
+$generator.text$
+</generator
+>>
+
+ICON(icon) ::= <<
+<icon>$icon$</icon>
+>>
+
+LOGO(logo) ::= <<
+<logo>$logo$</logo>
+>>
+
+RIGHTS(rights) ::= <<
+<rights>$rights$</rights>
+>>
+
+SUBTITLE(subtitle) ::= <<
+<subtitle>$subtitle$</subtitle>
+>>
+
+SUMMARY(summary) ::= <<
+<summary>$summary$</summary>
+>>
+
+PUBLISHED(published) ::= <<
+<published>$published$</published>
+>>
+
+SOURCE(source) ::= <<
+<source>
+  $source.id:ID()$
+  $source.title:TITLE()$
+  $source.updated:UPDATED()$
+  $source.rights:RIGHTS()$
+</source>
+>>

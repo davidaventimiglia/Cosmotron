@@ -1,0 +1,124 @@
+group atomic;
+
+delimiters "$", "$"
+
+SERVICEDOC(servicedoc) ::= <<
+<?xml version="1.0" encoding='utf-8' standalone="yes"?> 
+<service xml:base="http://services.odata.org/OData/OData.svc/"
+	 xmlns:atom="http://www.w3.org/2005/Atom"
+	 xmlns:app="http://www.w3.org/2007/app"
+	 xmlns="http://www.w3.org/2007/app"> 
+  $servicedoc.workspaces:WORKSPACE()$ 
+</service>
+
+>>
+
+WORKSPACE(workspace) ::= <<
+
+<workspace> 
+  $workspace.title:TITLE()$
+  $workspace.collections:ATOMCOLLECTION()$
+</workspace>
+>>
+
+ATOMCOLLECTION(atomcollection) ::= <<
+
+<collection href="$workspace.title$/$atomcollection.href$"> 
+  $atomcollection.title:TITLE()$
+  $atomcollection.accepts:ACCEPT()$
+  $atomcollection.categories:CATEGORY()$
+</collection>
+>>
+
+TITLE(title) ::= <<
+<atom:title>$title$</atom:title>
+>>
+
+ACCEPT(accept) ::= <<
+<accept>$accept.mimetype$</accept>
+>>
+
+FEED(feed) ::= <<
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<feed xml:base="http://services.odata.org/OData/OData.svc/"
+      xmlns:d="http://schemas.microsoft.com/ado/2007/08/dataservices"
+      xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata"
+      xmlns="http://www.w3.org/2005/Atom">
+  $feed.id:ID()$
+  $feed.title:TITLE()$
+  $feed.updated:UPDATED()$
+  $feed.authors:AUTHOR()$
+  $feed.links:LINK()$
+  $feed.categories:CATEGORY()$
+  $feed.contributors:CONTRIBUTOR()$
+  $feed.generator:GENERATOR()$
+  $feed.icon:ICON()$
+  $feed.logo:LOGO()$
+  $feed.rights:RIGHTS()$
+  $feed.subtitle:SUBTITLE()$
+  $feed.entries:ENTRY()$
+</feed>
+
+>>
+
+ENTRY(entry) ::= <<
+<entry>
+  $entry.id:ID()$
+  $entry.title:TITLE()$
+  $entry.updated:UPDATED()$
+  $entry.authors:AUTHOR()$
+  $entry.content:CONTENT()$
+  $entry.links:LINK()$
+  $entry.summary:SUMMARY()$
+  $entry.categories:CATEGORY()$
+  $entry.contributors:CONTRIBUTOR()$
+  $entry.published:PUBLISHED()$
+  $entry.source:SOURCE()$
+  $entry.rights:RIGHTS()$
+</entry>
+>>
+
+CATEGORY(category) ::= <<
+<atom:category term="$category.term$" scheme="$category.schema$" label="$category.label$"/>
+>>
+
+CONTENT(content) ::= <<
+<content >
+  $first(content):FIRSTFIELD()$
+</content>
+>>
+
+LINK(link) ::= <<
+<link rel="edit" title="" href="link"/>
+>>
+
+PERSON(person) ::= <<
+<author>
+  <name>$author$</name>
+</author>
+>>
+
+TEXT(text) ::= <<
+$text$
+>>
+
+UPDATED(updated) ::= <<
+<updated>$updated$</updated>
+>>
+
+AUTHOR(author) ::= <<
+>>
+
+ID(id) ::= <<
+<id>$id$</id>
+>>
+
+FIRSTFIELD(field) ::= <<
+  $field$
+>>
+
+FIELD(field) ::= <<
+  , $field$
+>>
+
+
