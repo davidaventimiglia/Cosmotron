@@ -3,11 +3,12 @@ group atom_feed;
 delimiters "$", "$"
 
 FEED(feed) ::= <<
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+
+<?xml version="1.0" encoding='utf-8' standalone="yes"?> 
+<?xml-stylesheet type="text/xsl" href="/atomfeed.xsl"?>
 <feed xml:base="http://services.odata.org/OData/OData.svc/"
       xmlns:d="http://schemas.microsoft.com/ado/2007/08/dataservices"
-      xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata"
-      xmlns="http://www.w3.org/2005/Atom">
+      xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata">
   $feed.id:ID()$
   $feed.title:TITLE()$
   $feed.updated:UPDATED()$
@@ -44,15 +45,15 @@ ENTRY(entry) ::= <<
 
 CONTENT(entry) ::= <<
   <content type="application/xml">
-    <m:properties>
+    <properties>
       $entry.content.keys,entry.content.values:{n,v|$PROPERTY(n, v)$}$
-    </m:properties>
+    </properties>
   </content>
 >>
 
 PROPERTY(name, value) ::= <<
 
-<d:$name$>$value$</d:$name$>
+<$name$>$value$</$name$>
 >>
 
 ID(id) ::= <<

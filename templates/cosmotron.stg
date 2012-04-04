@@ -1,0 +1,6 @@
+group cosmotron;
+
+delimiters "$", "$"
+
+PREAMBLE(xsl) ::= <<
+>>

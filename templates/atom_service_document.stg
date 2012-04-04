@@ -3,6 +3,9 @@ group atom_service_document;
 delimiters "$", "$"
 
 SERVICEDOC(servicedoc) ::= <<
+
+<?xml version="1.0" encoding='utf-8' standalone="yes"?> 
+<?xml-stylesheet type="text/xsl" href="/atomservicedocument.xsl"?>
 <service xml:base="http://services.odata.org/OData/OData.svc/"
 	 xmlns:atom="http://www.w3.org/2005/Atom"
 	 xmlns:app="http://www.w3.org/2007/app">

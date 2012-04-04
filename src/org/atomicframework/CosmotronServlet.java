@@ -50,17 +50,16 @@ public class CosmotronServlet extends HttpServlet {
     // Private Helper Methods --------------------------------------------------
 
     private void loadTemplates () {
-	this.group = new STGroupFile("cosmotron.stg");}
+	this.group = new STGroupFile("templates/cosmotron.stg");}
 
     private void generateResponse (HttpServletRequest request, HttpServletResponse response) 
 	throws Exception {
 	response.setContentType("application/xml");
 	ContentExchange contentExchange = new ContentExchange();
-	contentExchange.setURL("http://localhost:8080/atomic" + request.getPathInfo());
+	contentExchange.setURL("http://localhost:8180/atomic" + request.getPathInfo());
 	this.client.send(contentExchange);
 	contentExchange.waitForDone();
 	ST t = this.group.getInstanceOf("PREAMBLE");
-	t.add("xsl", "cosmotron.xsl");
 	t.write(new AutoIndentWriter(response.getWriter()));
 	response.getWriter().write(contentExchange.getResponseContent());
 	response.setStatus(HttpServletResponse.SC_OK);}

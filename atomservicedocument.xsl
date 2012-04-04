@@ -13,7 +13,7 @@
 	      <ul>
  	      <xsl:for-each select="collection">
 		<li>
-		  <a href="{@href}">
+		  <a href="{@href}" target="right">
 		    <xsl:value-of select="atom:title"/>
 		  </a>
 	      </li>

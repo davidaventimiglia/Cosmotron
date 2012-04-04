@@ -1,10 +1,10 @@
 * To do list for Atomic
-*** TODO Make Makefile.am suppress warnings AND work with javac and gcj
+*** DONE Make Makefile.am suppress warnings AND work with javac and gcj
 *** TODO Suppress warnings when rebuilding Makefile from Makefile.am
 *** DONE Make Makefile.am move static resources from src into classes
 *** TODO Figure out how to insert an XSL stylesheet link into service and feed documents
 *** TODO Do I need separate XSL stylesheets for service and feed docs, or can I just have one?
-*** TODO Create a BitBucket repository for all this stuff and start using version control.
+*** DONE Create a BitBucket repository for all this stuff and start using version control.
 *** TODO Figure out ODATA encoding for feed property data.
 *** TODO Set up configuration for Atomic and Cosmotron.
     - Each looks for a properties file (e.g. atomic.properties, cosmotron.properties)
@@ -20,4 +20,5 @@
 *** TODO Remove derby jar files, if I can figure out where they are in the standard JDK.
 *** TODO Get access to the log4J facilities.
 *** TODO Maybe suppress Jetty log4J INFO output, if possible.
+*** TODO Add installable scripts to run the programs (bash).
 

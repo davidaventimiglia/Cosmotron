@@ -9,7 +9,6 @@ classesdir = $(top_builddir)/classes
 depdir = $(top_builddir)/deps
 jardir = $(prefix)/java
 classes_JAVA = $(shell find . -name '*.java')
-src_DATA = $(shell find src -not -name '*.java' -type f)
 JARS = $(shell find lib -name '*.jar' -printf '%p:')
 AUTOTESTS = $(shell find src -name '*Test.java')
 CLASSPATH = "$(shell $(CYGPATH_PW) $(JARS)$(top_builddir)/classes)"
@@ -19,18 +18,15 @@ JARFILE = atomic.jar
 .PHONY: clean-local-check
 
 all-local: $(JARFILE)
-	@MKDIR_P@ $(classesdir)
 
 install-data-local: $(JARFILE)
 	@MKDIR_P@ $(jardir)
 	cp $(JARFILE) $(jardir)
 
-nuninstall-local:
+uninstall-local:
 	rm -f $(jardir)/$(JARFILE)
 
 $(JARFILE): $(classes_JAVA)
-	cd
-	cp -t $(classesdir) $(src_DATA)
 	@JAR@ -cf $(JARFILE) -C $(classesdir) .
 
 clean-local: clean-local-check

@@ -51,8 +51,8 @@ public class AtomServlet extends HttpServlet {
 	Class.forName(this.config.getInitParameter(JDBCDRIVER));}
     
     private void loadTemplates () {
-	this.serviceDoc = new STGroupFile("atom_service_document.stg");
-	this.feed = new STGroupFile("atom_feed.stg");}
+	this.serviceDoc = new STGroupFile("templates/atom_service_document.stg");
+	this.feed = new STGroupFile("templates/atom_feed.stg");}
 
     private void generateServiceDocument (HttpServletRequest request, HttpServletResponse response) 
 	throws Exception {

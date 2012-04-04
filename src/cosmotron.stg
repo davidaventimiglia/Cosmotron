@@ -1,9 +1,0 @@
-group cosmotron;
-
-delimiters "$", "$"
-
-PREAMBLE(xsl) ::= <<
-<?xml version="1.0" encoding='utf-8' standalone="yes"?> 
-<?xml-stylesheet type="text/xsl" href="../$xsl$"?>
-
->>

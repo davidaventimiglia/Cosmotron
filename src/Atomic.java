@@ -8,11 +8,11 @@ import org.stringtemplate.v4.STGroupFile;
 
 public class Atomic {
     public static void main (String[] args) throws Exception{
-	STGroup group = new STGroupFile("atomic_splash.stg");
+	STGroup group = new STGroupFile("templates/atomic_splash.stg");
 	System.out.println(group.getInstanceOf("logo_Standard").render());
 	System.out.println(group.getInstanceOf("starting").render());
 	try {(new NetworkServerControl()).start(null);}	catch (Exception e) {System.exit(1);}
-	Server s1 = new Server(8080);
+	Server s1 = new Server(8180);
 	ServletContextHandler ctx1 = new ServletContextHandler(ServletContextHandler.SESSIONS);
 	ctx1.setContextPath("/");
 	s1.setHandler(ctx1);

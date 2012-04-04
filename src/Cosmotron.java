@@ -9,10 +9,10 @@ import org.stringtemplate.v4.STGroupFile;
 
 public class Cosmotron {
     public static void main (String[] args) throws Exception{
-	STGroup group = new STGroupFile("cosmotron_splash.stg");
+	STGroup group = new STGroupFile("templates/cosmotron_splash.stg");
 	System.out.println(group.getInstanceOf("logo_Standard").render());
 	System.out.println(group.getInstanceOf("starting").render());
-	Server s1 = new Server(8180);
+	Server s1 = new Server(8080);
  	ServletContextHandler ctx1 = new ServletContextHandler(ServletContextHandler.SESSIONS);
 	ctx1.setContextPath("/");
 	s1.setHandler(ctx1);
