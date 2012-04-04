@@ -21,4 +21,5 @@
 *** TODO Get access to the log4J facilities.
 *** TODO Maybe suppress Jetty log4J INFO output, if possible.
 *** TODO Add installable scripts to run the programs (bash).
+*** TODO Install proper error handling (everywhere).
 

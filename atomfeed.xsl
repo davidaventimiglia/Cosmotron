@@ -9,14 +9,15 @@
       <body>
 	<table border="1">
 	  <tr>
- 	    <xsl:for-each select="feed/entry/properties/*">
-	      <td><xsl:value-of select="local-name()"/></td>
+ 	    <xsl:for-each select="feed/entry[1]/content/properties/*">
+	      <th><xsl:value-of select="local-name()"/></th>
 	    </xsl:for-each>
 	  </tr>
  	  <xsl:for-each select="feed/entry">
 	    <tr>
-	      <td><xsl:value-of select="content/properties/NAME"/></td>
-	      <td><xsl:value-of select="content/properties/AGE"/></td>
+ 	      <xsl:for-each select="content/properties/*">
+		<td><xsl:value-of select="."/></td>
+	      </xsl:for-each>
 	    </tr>
 	  </xsl:for-each>
 	</table>
