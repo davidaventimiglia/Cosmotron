@@ -8,20 +8,22 @@
     <html>
       <head><title>Content</title></head>
       <body>
-	<table border="1">
-	  <tr>
- 	    <xsl:for-each select="a:feed/a:entry[1]/a:content/properties/*">
-	      <th><xsl:value-of select="local-name()"/></th>
-	    </xsl:for-each>
-	  </tr>
- 	  <xsl:for-each select="a:feed/a:entry">
+	<xsl:if test="count(a:feed/a:entry)>0">
+	  <table border="1">
 	    <tr>
- 	      <xsl:for-each select="a:content/properties/*">
-		<td><xsl:value-of select="."/></td>
+ 	      <xsl:for-each select="a:feed/a:entry[1]/a:content/properties/*">
+		<th><xsl:value-of select="local-name()"/></th>
 	      </xsl:for-each>
 	    </tr>
-	  </xsl:for-each>
-	</table>
+ 	    <xsl:for-each select="a:feed/a:entry">
+	      <tr>
+ 		<xsl:for-each select="a:content/properties/*">
+		  <td><xsl:value-of select="."/></td>
+		</xsl:for-each>
+	      </tr>
+	    </xsl:for-each>
+	  </table>
+	</xsl:if>
       </body>
     </html>
   </xsl:template>
