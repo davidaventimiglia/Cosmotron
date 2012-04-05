@@ -17,6 +17,7 @@ import org.stringtemplate.v4.ST;
 import org.stringtemplate.v4.STGroup;
 import org.stringtemplate.v4.STGroupFile;
 import org.stringtemplate.v4.AutoIndentWriter;
+import org.apache.commons.lang3.StringEscapeUtils;
 
 public class AtomServlet extends HttpServlet {
     public static final long serialVersionUID = 1;
@@ -79,7 +80,7 @@ public class AtomServlet extends HttpServlet {
 		     .getConnection(config.getInitParameter(JDBCURL))
 		     .getMetaData()
 		     .getSchemas(); r.next();)
-		this.workspaces.add(new AtomWorkspace(r.getString(1)));}}
+		this.workspaces.add(new AtomWorkspace(StringEscapeUtils.escapeXml(r.getString(1))));}}
 
     private class AtomWorkspace {
 	public String title;
@@ -90,7 +91,7 @@ public class AtomServlet extends HttpServlet {
 		     .getConnection(config.getInitParameter(JDBCURL))
 		     .getMetaData()
 		     .getTables(null, workspace, null, null); r.next();)
-		this.collections.add(new AtomCollection(r.getString(3)));}}
+		this.collections.add(new AtomCollection(StringEscapeUtils.escapeXml(r.getString(3))));}}
 
     private class AtomCollection {
 	public String title;
@@ -146,5 +147,5 @@ public class AtomServlet extends HttpServlet {
 	    this.id = id;
 	    this.title = id;
 	    this.content = new HashMap<String, String>();
-	    for (String name : columnNames) this.content.put(name, r.getString(name));}}}
+	    for (String name : columnNames) this.content.put(name, StringEscapeUtils.escapeXml(r.getString(name)));}}}
 
