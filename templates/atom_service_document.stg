@@ -6,41 +6,41 @@ SERVICEDOC(servicedoc) ::= <<
 
 <?xml version="1.0" encoding='utf-8' standalone="yes"?> 
 <?xml-stylesheet type="text/xsl" href="/atomservicedocument.xsl"?>
-<service xml:base="http://services.odata.org/OData/OData.svc/"
-	 xmlns:atom="http://www.w3.org/2005/Atom"
-	 xmlns:app="http://www.w3.org/2007/app">
+<p:service xml:base="http://services.odata.org/OData/OData.svc/"
+	 xmlns:a="http://www.w3.org/2005/Atom"
+	 xmlns:p="http://www.w3.org/2007/app">
   $servicedoc.workspaces:WORKSPACE()$ 
-</service>
+</p:service>
 
 >>
 
 WORKSPACE(workspace) ::= <<
 
-<workspace> 
+<p:workspace> 
   $workspace.title:TITLE()$
   $workspace.collections:ATOMCOLLECTION()$
-</workspace>
+</p:workspace>
 >>
 
 ATOMCOLLECTION(atomcollection) ::= <<
 
-<collection href="$workspace.title$/$atomcollection.href$"> 
+<p:collection href="$workspace.title$/$atomcollection.href$"> 
   $atomcollection.title:TITLE()$
   $atomcollection.accepts:ACCEPT()$
   $atomcollection.categories:CATEGORY()$
-</collection>
+</p:collection>
 >>
 
 TITLE(title) ::= <<
-<atom:title>$title$</atom:title>
+<a:title>$title$</a:title>
 >>
 
 ACCEPT(accept) ::= <<
-<accept>$accept.mimetype$</accept>
+<p:accept>$accept.mimetype$</p:accept>
 >>
 
 CATEGORY(category) ::= <<
-<atom:category term="$category.term$" scheme="$category.schema$" label="$category.label$"/>
+<a:category term="$category.term$" scheme="$category.schema$" label="$category.label$"/>
 >>
 
 LINK(link) ::= <<
@@ -48,15 +48,15 @@ LINK(link) ::= <<
 >>
 
 PERSON(person) ::= <<
-<author>
-  <name>$author$</name>
-</author>
+<p:author>
+  <p:name>$author$</p:name>
+</p:author>
 >>
 
 UPDATED(updated) ::= <<
-<updated>$updated$</updated>
+<p:updated>$updated$</p:updated>
 >>
 
 ID(id) ::= <<
-<id>$id$</id>
+<p:id>$id$</p:id>
 >>

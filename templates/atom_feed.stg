@@ -6,9 +6,10 @@ FEED(feed) ::= <<
 
 <?xml version="1.0" encoding='utf-8' standalone="yes"?> 
 <?xml-stylesheet type="text/xsl" href="/atomfeed.xsl"?>
-<feed xml:base="http://services.odata.org/OData/OData.svc/"
+<a:feed xml:base="http://services.odata.org/OData/OData.svc/"
       xmlns:d="http://schemas.microsoft.com/ado/2007/08/dataservices"
-      xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata">
+      xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata"
+      xmlns:a="http://www.w3.org/2005/Atom">
   $feed.id:ID()$
   $feed.title:TITLE()$
   $feed.updated:UPDATED()$
@@ -22,12 +23,12 @@ FEED(feed) ::= <<
   $feed.rights:RIGHTS()$
   $feed.subtitle:SUBTITLE()$
   $feed.entries:ENTRY()$
-</feed>
+</a:feed>
 
 >>
 
 ENTRY(entry) ::= <<
-<entry>
+<a:entry>
   $entry.id:ID()$
   $entry.title:TITLE()$
   $entry.updated:UPDATED()$
@@ -40,15 +41,15 @@ ENTRY(entry) ::= <<
   $entry.published:PUBLISHED()$
   $entry.source:SOURCE()$
   $entry.rights:RIGHTS()$
-</entry>
+</a:entry>
 >>
 
 CONTENT(entry) ::= <<
-  <content type="application/xml">
-    <properties>
-      $entry.content.keys,entry.content.values:{n,v|$PROPERTY(n, v)$}$
-    </properties>
-  </content>
+<a:content type="application/xml">
+  <properties>
+    $entry.content.keys,entry.content.values:{n,v|$PROPERTY(n, v)$}$
+  </properties>
+</a:content>
 >>
 
 PROPERTY(name, value) ::= <<
@@ -57,19 +58,19 @@ PROPERTY(name, value) ::= <<
 >>
 
 ID(id) ::= <<
-<id>$id$</id>
+<a:id>$id$</a:id>
 >>
 
 TITLE(title) ::= <<
-<title>$title$</title>
+<a:title>$title$</a:title>
 >>
 
 UPDATED(updated) ::= <<
-<updated>$updated$</updated>
+<a:updated>$updated$</a:updated>
 >>
 
 CATEGORY(category) ::= <<
-<category term="$category.term$" scheme="$category.schema$" label="$category.label$"/>
+<a:category term="$category.term$" scheme="$category.schema$" label="$category.label$"/>
 >>
 
 LINK(link) ::= <<
@@ -77,9 +78,9 @@ LINK(link) ::= <<
 >>
 
 PERSON(person) ::= <<
-<author>
-  <name>$person$</name>
-</author>
+<a:author>
+  <a:name>$person$</a:name>
+</a:author>
 >>
 
 TEXT(text) ::= <<
@@ -87,13 +88,13 @@ $text$
 >>
 
 GENERATOR(generator) ::= <<
-<generator uri="$generator.uri$" version="$generator.version$">
+<a:generator uri="$generator.uri$" version="$generator.version$">
 $generator.text$
-</generator
+</a:generator
 >>
 
 ICON(icon) ::= <<
-<icon>$icon$</icon>
+<a:icon>$icon$</a:icon>
 >>
 
 LOGO(logo) ::= <<
@@ -101,11 +102,11 @@ LOGO(logo) ::= <<
 >>
 
 RIGHTS(rights) ::= <<
-<rights>$rights$</rights>
+<a:rights>$rights$</a:rights>
 >>
 
 SUBTITLE(subtitle) ::= <<
-<subtitle>$subtitle$</subtitle>
+<a:subtitle>$subtitle$</a:subtitle>
 >>
 
 SUMMARY(summary) ::= <<
@@ -113,14 +114,14 @@ SUMMARY(summary) ::= <<
 >>
 
 PUBLISHED(published) ::= <<
-<published>$published$</published>
+<a:published>$published$</a:published>
 >>
 
 SOURCE(source) ::= <<
-<source>
+<a:source>
   $source.id:ID()$
   $source.title:TITLE()$
   $source.updated:UPDATED()$
   $source.rights:RIGHTS()$
-</source>
+</a:source>
 >>
