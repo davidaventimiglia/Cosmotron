@@ -54,9 +54,11 @@ public class CosmotronServlet extends HttpServlet {
 
     private void generateResponse (HttpServletRequest request, HttpServletResponse response) 
 	throws Exception {
-	response.setContentType("application/xml");
+	response.setContentType("text/xml");
 	ContentExchange contentExchange = new ContentExchange();
-	contentExchange.setURL("http://localhost:8180/atomic" + request.getPathInfo());
+	String pathInfo = request.getPathInfo();
+	pathInfo = pathInfo==null ? "" : pathInfo;
+	contentExchange.setURL("http://localhost:8180/atomic" + pathInfo);
 	this.client.send(contentExchange);
 	contentExchange.waitForDone();
 	ST t = this.group.getInstanceOf("PREAMBLE");
