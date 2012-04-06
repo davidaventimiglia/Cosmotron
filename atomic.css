@@ -1,0 +1,42 @@
+body {
+    background-color: black;
+    color: white;
+}
+
+frameset {
+    frameborder: no;
+}
+
+table {
+    width: 100%;
+    border-style: solid;
+    border-width: 1px;
+    border-collapse: collapse;
+}
+
+th {
+    border-style: solid;
+    border-width: 1px;
+    background-color: gray;
+}
+
+td {
+    border-style: solid;
+    border-width: 1px;
+}
+
+ul {
+    list-style-type: none;
+}
+
+.workspace:hover li {
+    display: block;
+}
+
+ul ul {
+    display: none;
+}
+
+ul:hover ul {
+    display: block;
+}

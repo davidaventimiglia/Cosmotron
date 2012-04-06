@@ -5,18 +5,22 @@
 		xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
   <xsl:template match="/">
     <html>
+      <head>
+	<link rel="stylesheet" href="/atomic.css" type="text/css" media="screen"/>
+      </head>
       <body>
-	<h2>Atomic</h2>
 	<ul>
  	  <xsl:for-each select="p:service/p:workspace">
-	      <li><xsl:value-of select="a:title"/></li>
+	      <li id="{a:title}" class="workspace">
+		<xsl:value-of select="a:title"/>
+	      </li>
 	      <ul>
  	      <xsl:for-each select="p:collection">
-		<li>
+		<li id="{a:title}" class="collection">
 		  <a href="{@href}" target="right">
 		    <xsl:value-of select="a:title"/>
 		  </a>
-	      </li>
+		</li>
 	      </xsl:for-each>
 	      </ul>
 	  </xsl:for-each>

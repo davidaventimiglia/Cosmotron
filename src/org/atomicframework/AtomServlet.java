@@ -147,5 +147,6 @@ public class AtomServlet extends HttpServlet {
 	    this.id = id;
 	    this.title = id;
 	    this.content = new HashMap<String, String>();
-	    for (String name : columnNames) this.content.put(name, StringEscapeUtils.escapeXml(r.getString(name)));}}}
+	    for (String name : columnNames) 
+		this.content.put(name, StringEscapeUtils.escapeXml(r.getString(name)));}}}
 

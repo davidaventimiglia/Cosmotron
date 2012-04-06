@@ -6,10 +6,12 @@
 		xmlns:a="http://www.w3.org/2005/Atom">
   <xsl:template match="/">
     <html>
-      <head><title>Content</title></head>
+      <head>
+	<link rel="stylesheet" href="/atomic.css" type="text/css" media="screen"/>
+      </head>
       <body>
 	<xsl:if test="count(a:feed/a:entry)>0">
-	  <table border="1">
+	  <table>
 	    <tr>
  	      <xsl:for-each select="a:feed/a:entry[1]/a:content/properties/*">
 		<th><xsl:value-of select="local-name()"/></th>
