@@ -3,14 +3,16 @@ import org.atomicframework.AtomServlet;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
+import org.eclipse.jetty.util.log.Log;
+import org.eclipse.jetty.util.log.Logger;
 import org.stringtemplate.v4.STGroup;
 import org.stringtemplate.v4.STGroupFile;
 
 public class Atomic {
     public static void main (String[] args) throws Exception{
 	STGroup group = new STGroupFile("templates/atomic_splash.stg");
+	Logger log = Log.getLogger(Atomic.class);
 	System.out.println(group.getInstanceOf("logo_Standard").render());
-	System.out.println(group.getInstanceOf("starting").render());
 	try {(new NetworkServerControl()).start(null);}	catch (Exception e) {System.exit(1);}
 	Server s1 = new Server(8180);
 	ServletContextHandler ctx1 = new ServletContextHandler(ServletContextHandler.SESSIONS);
@@ -21,5 +23,5 @@ public class Atomic {
 	h1.setInitParameter(AtomServlet.JDBCURL, args[1]);
         ctx1.addServlet(h1, "/atomic/*");
 	s1.start();
-	System.out.println(group.getInstanceOf("ready").render());
+	log.info(group.getInstanceOf("ready").render());
         s1.join();}}

@@ -1,17 +1,19 @@
 import org.apache.derby.drda.NetworkServerControl;
 import org.atomicframework.CosmotronServlet;
 import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.servlet.DefaultServlet;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
-import org.eclipse.jetty.servlet.DefaultServlet;
+import org.eclipse.jetty.util.log.Log;
+import org.eclipse.jetty.util.log.Logger;
 import org.stringtemplate.v4.STGroup;
 import org.stringtemplate.v4.STGroupFile;
 
 public class Cosmotron {
     public static void main (String[] args) throws Exception{
 	STGroup group = new STGroupFile("templates/cosmotron_splash.stg");
+	Logger log = Log.getLogger(Cosmotron.class);
 	System.out.println(group.getInstanceOf("logo_Standard").render());
-	System.out.println(group.getInstanceOf("starting").render());
 	Server s1 = new Server(8080);
  	ServletContextHandler ctx1 = new ServletContextHandler(ServletContextHandler.SESSIONS);
 	ctx1.setContextPath("/");
@@ -23,5 +25,5 @@ public class Cosmotron {
 	h2.setInitParameter("dirAllowed", "true");
 	h2.setInitParameter("resourceBase", System.getProperty("user.dir"));
 	s1.start();
-	System.out.println(group.getInstanceOf("ready").render());
+	log.info(group.getInstanceOf("ready").render());
         s1.join();}}
