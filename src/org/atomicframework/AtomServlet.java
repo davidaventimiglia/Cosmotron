@@ -57,19 +57,25 @@ public class AtomServlet extends HttpServlet {
 
     private void generateServiceDocument (HttpServletRequest request, HttpServletResponse response) 
 	throws Exception {
-	response.setContentType("application/atomsvc+xml");
-	ST t = this.serviceDoc.getInstanceOf("SERVICEDOC");
-	t.add("servicedoc", new AtomServiceDocument());
-	t.write(new AutoIndentWriter(response.getWriter()));
-	response.setStatus(HttpServletResponse.SC_OK);}
+	try {
+	    response.setContentType("application/atomsvc+xml");
+	    ST t = this.serviceDoc.getInstanceOf("SERVICEDOC");
+	    t.add("servicedoc", new AtomServiceDocument());
+	    t.write(new AutoIndentWriter(response.getWriter()));
+	    response.setStatus(HttpServletResponse.SC_OK);}
+	catch (Exception e) {
+	    response.setStatus(HttpServletResponse.SC_NOT_FOUND);}}
 
     private void generateFeed (HttpServletRequest request, HttpServletResponse response) 
 	throws Exception {
-	response.setContentType("application/atom+xml");
-	ST t = this.feed.getInstanceOf("FEED");
-	t.add("feed", new AtomFeed(("" + request.getPathInfo()).split("/")));
-	t.write(new AutoIndentWriter(response.getWriter()));
-	response.setStatus(HttpServletResponse.SC_OK);}
+	try {
+	    response.setContentType("application/atom+xml");
+	    ST t = this.feed.getInstanceOf("FEED");
+	    t.add("feed", new AtomFeed(("" + request.getPathInfo()).split("/")));
+	    t.write(new AutoIndentWriter(response.getWriter()));
+	    response.setStatus(HttpServletResponse.SC_OK);}
+	catch (Exception e) {
+	    response.setStatus(HttpServletResponse.SC_NOT_FOUND);}}
     
     // Private Helper Inner Classes --------------------------------------------
 
