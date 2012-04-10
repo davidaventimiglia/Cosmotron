@@ -25,4 +25,5 @@
 *** TODO Switch to PreparedStatements in AtomicServlet.
 *** TODO Do due diligence on other ways to avoid SQL injection.
 *** TODO Fix .dir-locals.el so that it doesn't hard code the directory.
+*** TODO Stop throwing ServletException, and return appropriate HTTP status codes instead.
 

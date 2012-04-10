@@ -25,6 +25,14 @@ td {
     border-width: 1px;
 }
 
+tr:nth-child(even) {
+    background-color: black;
+}
+
+tr:nth-child(odd) {
+    background-color: gray;
+}
+
 ul {
     list-style-type: none;
 }
