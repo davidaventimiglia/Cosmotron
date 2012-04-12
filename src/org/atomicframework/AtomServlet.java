@@ -45,8 +45,8 @@ public class AtomServlet extends HttpServlet {
 	try {
 	    this.loadTemplates();
 	    String pathInfo = "" + request.getPathInfo();
-	    if (pathInfo.split("/").length<=1) generateServiceDocument(request, response);
-	    if (pathInfo.split("/").length==3) generateFeed(request, response);}
+	    if (pathInfo.split("/").length<=1) writeServiceDocument(request, response);
+	    if (pathInfo.split("/").length==3) writeFeed(request, response);}
 	catch (Exception e) {throw new ServletException(e);}}
     
     // Private Helper Methods --------------------------------------------------
@@ -58,7 +58,7 @@ public class AtomServlet extends HttpServlet {
 	this.serviceDoc = new STGroupFile("templates/atom_service_document.stg");
 	this.feed = new STGroupFile("templates/atom_feed.stg");}
 
-    private void generateServiceDocument (HttpServletRequest request, HttpServletResponse response) 
+    private void writeServiceDocument (HttpServletRequest request, HttpServletResponse response) 
 	throws Exception {
 	AtomServiceDocument d = this.getServiceDocument();
 	if (d!=null) {
@@ -69,7 +69,7 @@ public class AtomServlet extends HttpServlet {
 	    response.setStatus(HttpServletResponse.SC_OK);}
 	else response.setStatus(HttpServletResponse.SC_NOT_FOUND);}
 
-    private void generateFeed (HttpServletRequest request, HttpServletResponse response) 
+    private void writeFeed (HttpServletRequest request, HttpServletResponse response) 
 	throws Exception {
 	AtomFeed f = this.getFeed(("" + request.getPathInfo()).toUpperCase().split("/"));
 	if (f!=null) {
