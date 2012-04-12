@@ -18,7 +18,7 @@
 *** TODO Start writing Texinfo docs.
 *** TODO Strip out lightweight object model in favor of simple data structures.
 *** TODO Remove derby jar files, if I can figure out where they are in the standard JDK.
-*** TODO Get access to the log4J facilities.
+*** DONE Get access to the log4J facilities.
 *** TODO Maybe suppress Jetty log4J INFO output, if possible.
 *** TODO Add installable scripts to run the programs (bash).
 *** TODO Install proper error handling (everywhere).
@@ -35,4 +35,5 @@
 ******* If URL points to valid collection, return 200 plus feed
 ******* If URL points to an invalid service doc or collection, return 404
 ******* Else, throw ServletException and/or return 500
+*** TODO Map actual table names to user-visible names.
 

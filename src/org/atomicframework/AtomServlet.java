@@ -1,25 +1,26 @@
 package org.atomicframework;
 
 import java.io.IOException;
+import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
-import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.HashMap;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.apache.commons.lang3.StringEscapeUtils;
+import org.stringtemplate.v4.AutoIndentWriter;
 import org.stringtemplate.v4.ST;
 import org.stringtemplate.v4.STGroup;
 import org.stringtemplate.v4.STGroupFile;
-import org.stringtemplate.v4.AutoIndentWriter;
-import org.apache.commons.lang3.StringEscapeUtils;
 
 public class AtomServlet extends HttpServlet {
     public static final long serialVersionUID = 1;
@@ -59,29 +60,37 @@ public class AtomServlet extends HttpServlet {
 
     private void generateServiceDocument (HttpServletRequest request, HttpServletResponse response) 
 	throws Exception {
-	try {
-	    response.setContentType("application/atomsvc+xml");
+	AtomServiceDocument d = this.getServiceDocument();
+	if (d!=null) {
 	    ST t = this.serviceDoc.getInstanceOf("SERVICEDOC");
-	    t.add("servicedoc", new AtomServiceDocument());
+	    response.setContentType("application/atomsvc+xml");
+	    t.add("servicedoc", d);
 	    t.write(new AutoIndentWriter(response.getWriter()));
 	    response.setStatus(HttpServletResponse.SC_OK);}
-	catch (Exception e) {
-	    response.setStatus(HttpServletResponse.SC_NOT_FOUND);}}
+	else response.setStatus(HttpServletResponse.SC_NOT_FOUND);}
 
     private void generateFeed (HttpServletRequest request, HttpServletResponse response) 
 	throws Exception {
-	try {
-	    response.setContentType("application/atom+xml");
+	AtomFeed f = this.getFeed(("" + request.getPathInfo()).toUpperCase().split("/"));
+	if (f!=null) {
 	    ST t = this.feed.getInstanceOf("FEED");
-	    t.add("feed", new AtomFeed(("" + request.getPathInfo()).split("/")));
+	    response.setContentType("application/atom+xml");
+	    t.add("feed", f);
 	    t.write(new AutoIndentWriter(response.getWriter()));
 	    response.setStatus(HttpServletResponse.SC_OK);}
-	catch (Exception e) {
-	    response.setStatus(HttpServletResponse.SC_NOT_FOUND);}}
+	else response.setStatus(HttpServletResponse.SC_NOT_FOUND);}
 
     private DatabaseMetaData getDatabaseMetaData () throws SQLException {
 	return DriverManager.getConnection(config.getInitParameter(JDBCURL)).getMetaData();}
+
+    private AtomServiceDocument getServiceDocument () throws Exception {
+	return new AtomServiceDocument();}
     
+    private AtomFeed getFeed (String[] pathInfo) throws Exception {
+	return 
+	    this.getDatabaseMetaData().getTables(null, pathInfo[1], pathInfo[2], null).next() ?
+	    new AtomFeed(pathInfo) : null;}
+
     // Private Helper Inner Classes --------------------------------------------
 
     private class AtomServiceDocument {
@@ -130,6 +139,7 @@ public class AtomServlet extends HttpServlet {
 	    this.title = pathInfo[1];
 	    this.href = pathInfo[1];
 	    this.id = pathInfo[1];
+	    DatabaseMetaData dsmd = getDatabaseMetaData();
 	    ResultSet r = DriverManager
 		.getConnection(config.getInitParameter(JDBCURL))
 		.createStatement()
@@ -137,8 +147,6 @@ public class AtomServlet extends HttpServlet {
 			      .replace("$SCHEMA$", pathInfo[1])
 			      .replace("$TABLE$", pathInfo[2]));
 	    ResultSetMetaData rsmd = r.getMetaData();
-	    DatabaseMetaData dsmd = 
-		DriverManager.getConnection(config.getInitParameter(JDBCURL)).getMetaData();
 	    int columnNumber = rsmd.getColumnCount();
 	    List<String> columnNames = new ArrayList<String>();
 	    for (int i = 1; i<=columnNumber; i++) columnNames.add(rsmd.getColumnName(i));
