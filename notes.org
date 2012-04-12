@@ -26,4 +26,13 @@
 *** TODO Do due diligence on other ways to avoid SQL injection.
 *** TODO Fix .dir-locals.el so that it doesn't hard code the directory.
 *** TODO Stop throwing ServletException, and return appropriate HTTP status codes instead.
+*** TODO Rationalize servlet operations
+***** What must AtomicServet do?
+******* Parse the request URL
+******* Check the accept request headers
+******* If URL is syntactically incorrect, return 400
+******* If URL points to valid service doc, return 200 plus service doc
+******* If URL points to valid collection, return 200 plus feed
+******* If URL points to an invalid service doc or collection, return 404
+******* Else, throw ServletException and/or return 500
 

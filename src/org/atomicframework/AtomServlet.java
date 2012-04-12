@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
+import java.sql.DatabaseMetaData;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -76,16 +78,16 @@ public class AtomServlet extends HttpServlet {
 	    response.setStatus(HttpServletResponse.SC_OK);}
 	catch (Exception e) {
 	    response.setStatus(HttpServletResponse.SC_NOT_FOUND);}}
+
+    private DatabaseMetaData getDatabaseMetaData () throws SQLException {
+	return DriverManager.getConnection(config.getInitParameter(JDBCURL)).getMetaData();}
     
     // Private Helper Inner Classes --------------------------------------------
 
     private class AtomServiceDocument {
 	public List<AtomWorkspace> workspaces = new ArrayList<AtomWorkspace>();
 	public AtomServiceDocument () throws Exception {
-	    for (ResultSet r = DriverManager
-		     .getConnection(config.getInitParameter(JDBCURL))
-		     .getMetaData()
-		     .getSchemas(); r.next();)
+	    for (ResultSet r = getDatabaseMetaData().getSchemas(); r.next();)
 		this.workspaces.add(new AtomWorkspace(StringEscapeUtils.escapeXml(r.getString(1))));}}
 
     private class AtomWorkspace {
@@ -93,10 +95,7 @@ public class AtomServlet extends HttpServlet {
 	public List<AtomCollection> collections = new ArrayList<AtomCollection>();
 	public AtomWorkspace (String workspace) throws Exception {
 	    this.title = workspace;
-	    for (ResultSet r = DriverManager
-		     .getConnection(config.getInitParameter(JDBCURL))
-		     .getMetaData()
-		     .getTables(null, workspace, null, null); r.next();)
+	    for (ResultSet r = getDatabaseMetaData().getTables(null, workspace, null, null); r.next();)
 		this.collections.add(new AtomCollection(StringEscapeUtils.escapeXml(r.getString(3))));}}
 
     private class AtomCollection {
@@ -138,6 +137,8 @@ public class AtomServlet extends HttpServlet {
 			      .replace("$SCHEMA$", pathInfo[1])
 			      .replace("$TABLE$", pathInfo[2]));
 	    ResultSetMetaData rsmd = r.getMetaData();
+	    DatabaseMetaData dsmd = 
+		DriverManager.getConnection(config.getInitParameter(JDBCURL)).getMetaData();
 	    int columnNumber = rsmd.getColumnCount();
 	    List<String> columnNames = new ArrayList<String>();
 	    for (int i = 1; i<=columnNumber; i++) columnNames.add(rsmd.getColumnName(i));
