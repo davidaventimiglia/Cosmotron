@@ -91,6 +91,12 @@ public class AtomServlet extends HttpServlet {
 	    this.getDatabaseMetaData().getTables(null, pathInfo[1], pathInfo[2], null).next() ?
 	    new AtomFeed(pathInfo) : null;}
 
+    private List<String> getColumnNames (String schema, String table) throws SQLException {
+	List<String> columnNames = new ArrayList<String>();
+	ResultSet r = getDatabaseMetaData().getColumns(null, schema, table, null);
+	while (r.next()) columnNames.add(r.getString(4));
+	return columnNames;}
+
     // Private Helper Inner Classes --------------------------------------------
 
     private class AtomServiceDocument {
@@ -139,19 +145,15 @@ public class AtomServlet extends HttpServlet {
 	    this.title = pathInfo[1];
 	    this.href = pathInfo[1];
 	    this.id = pathInfo[1];
-	    DatabaseMetaData dsmd = getDatabaseMetaData();
 	    ResultSet r = DriverManager
 		.getConnection(config.getInitParameter(JDBCURL))
 		.createStatement()
 		.executeQuery("select * from $SCHEMA$.$TABLE$"
 			      .replace("$SCHEMA$", pathInfo[1])
 			      .replace("$TABLE$", pathInfo[2]));
-	    ResultSetMetaData rsmd = r.getMetaData();
-	    int columnNumber = rsmd.getColumnCount();
-	    List<String> columnNames = new ArrayList<String>();
-	    for (int i = 1; i<=columnNumber; i++) columnNames.add(rsmd.getColumnName(i));
 	    while (r.next()) 
-		this.entries.add(new AtomEntry(pathInfo[1]+"."+pathInfo[2], r, columnNames));}}
+		this.entries.add(new AtomEntry(pathInfo[1]+"."+pathInfo[2], 
+					       r, getColumnNames(pathInfo[1], pathInfo[2])));}}
 
     private class AtomEntry {
 	public String id;
