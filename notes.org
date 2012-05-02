@@ -1,4 +1,4 @@
-* To do list for Atomic
+p* To do list for Atomic
 *** DONE Make Makefile.am suppress warnings AND work with javac and gcj
 *** TODO Suppress warnings when rebuilding Makefile from Makefile.am
 *** DONE Make Makefile.am move static resources from src into classes

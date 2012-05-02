@@ -1,6 +1,7 @@
 atomic.jar
 Test/*
 classes/*
+scratch/*
 Makefile
 Makefile.am~
 Makefile.in

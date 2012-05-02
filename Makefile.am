@@ -26,8 +26,13 @@ install-data-local: $(JARFILE)
 uninstall-local:
 	rm -f $(jardir)/$(JARFILE)
 
-$(JARFILE): $(classes_JAVA)
+unpack-libs:
+	mkdir -p scratch
+	cd scratch ; find ../lib/*.jar -exec jar -xf {} \;
+
+$(JARFILE): $(classes_JAVA) unpack-libs
 	@JAR@ -cf $(JARFILE) -C $(classesdir) .
+	@JAR@ -uf $(JARFILE) -C ./scratch .
 
 clean-local: clean-local-check
 
@@ -39,8 +44,8 @@ clean-local-check:
 check:
 	@JAVA@ -cp $(CLASSPATH) Atomic
 
-atomic:	all
-	@JAVA@ -cp $(CLASSPATH) Atomic "org.apache.derby.jdbc.ClientDriver" "jdbc:derby://localhost:1527/Test;create=true" 
+run-atomic: all
+	@JAVA@ -cp $(JARFILE) Atomic "org.apache.derby.jdbc.ClientDriver" "jdbc:derby://localhost:1527/Test;create=true" 
 
-cosmotron: all
-	@JAVA@ -cp $(CLASSPATH) Cosmotron
+run-cosmotron: all
+	@JAVA@ -cp $(JARFILE) Cosmotron

@@ -1,0 +1,2 @@
+#!/bin/sh
+java -cp atomic.jar Atomic  "org.apache.derby.jdbc.ClientDriver" "jdbc:derby://localhost:1527/Test;create=true" 
