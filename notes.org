@@ -36,4 +36,5 @@
 ******* If URL points to an invalid service doc or collection, return 404
 ******* Else, throw ServletException and/or return 500
 *** TODO Map actual table names to user-visible names.
+*** TODO Create a setenv script
 
