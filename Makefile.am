@@ -29,9 +29,10 @@ uninstall-local:
 unpack-libs:
 	mkdir -p scratch
 	cd scratch ; find ../lib/*.jar -exec jar -xf {} \;
+	find scratch -iname manifest.mf -exec rm {} +
 
 $(JARFILE): $(classes_JAVA) unpack-libs
-	@JAR@ -cf $(JARFILE) -C $(classesdir) .
+	@JAR@ -uf $(JARFILE) -C $(classesdir) .
 	@JAR@ -uf $(JARFILE) -C ./scratch .
 
 clean-local: clean-local-check

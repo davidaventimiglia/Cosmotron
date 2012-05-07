@@ -1,4 +1,4 @@
-p* To do list for Atomic
+* To do list for Atomic
 *** DONE Make Makefile.am suppress warnings AND work with javac and gcj
 *** TODO Suppress warnings when rebuilding Makefile from Makefile.am
 *** DONE Make Makefile.am move static resources from src into classes
@@ -20,11 +20,11 @@ p* To do list for Atomic
 *** TODO Remove derby jar files, if I can figure out where they are in the standard JDK.
 *** DONE Get access to the log4J facilities.
 *** TODO Maybe suppress Jetty log4J INFO output, if possible.
-*** TODO Add installable scripts to run the programs (bash).
+*** DONE Add installable scripts to run the programs (bash).
 *** TODO Install proper error handling (everywhere).
 *** TODO Switch to PreparedStatements in AtomicServlet.
 *** TODO Do due diligence on other ways to avoid SQL injection.
-*** TODO Fix .dir-locals.el so that it doesn't hard code the directory.
+*** DONE Fix .dir-locals.el so that it doesn't hard code the directory.
 *** TODO Stop throwing ServletException, and return appropriate HTTP status codes instead.
 *** TODO Rationalize servlet operations
 ***** What must AtomicServet do?
@@ -36,5 +36,6 @@ p* To do list for Atomic
 ******* If URL points to an invalid service doc or collection, return 404
 ******* Else, throw ServletException and/or return 500
 *** TODO Map actual table names to user-visible names.
-*** TODO Create a setenv script
+*** DONE Create a setenv script
+*** TODO Figure out where to install jar files, if possible
 
