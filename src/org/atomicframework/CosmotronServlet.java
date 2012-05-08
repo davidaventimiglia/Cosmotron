@@ -50,7 +50,7 @@ public class CosmotronServlet extends HttpServlet {
     // Private Helper Methods --------------------------------------------------
 
     private void loadTemplates () {
-	this.group = new STGroupFile("templates/cosmotron.stg");}
+	this.group = new STGroupFile("atomic_templates/cosmotron.stg");}
 
     private void generateResponse (HttpServletRequest request, HttpServletResponse response) 
 	throws Exception {
@@ -64,6 +64,7 @@ public class CosmotronServlet extends HttpServlet {
 	ST t = this.group.getInstanceOf("PREAMBLE");
 	t.write(new AutoIndentWriter(response.getWriter()));
 	response.getWriter().write(contentExchange.getResponseContent());
+
 	response.setStatus(HttpServletResponse.SC_OK);}
 
     private static void copyStream (InputStream input, OutputStream output) throws IOException {

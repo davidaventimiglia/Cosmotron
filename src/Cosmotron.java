@@ -11,7 +11,7 @@ import org.stringtemplate.v4.STGroupFile;
 
 public class Cosmotron {
     public static void main (String[] args) throws Exception{
-	STGroup group = new STGroupFile("templates/cosmotron_splash.stg");
+	STGroup group = new STGroupFile("atomic_templates/cosmotron_splash.stg");
 	Logger log = Log.getLogger(Cosmotron.class);
 	System.out.println(group.getInstanceOf("logo_Standard").render());
 	Server s1 = new Server(8080);

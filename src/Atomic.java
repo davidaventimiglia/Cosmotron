@@ -10,7 +10,7 @@ import org.stringtemplate.v4.STGroupFile;
 
 public class Atomic {
     public static void main (String[] args) throws Exception{
-	STGroup group = new STGroupFile("templates/atomic_splash.stg");
+	STGroup group = new STGroupFile("atomic_templates/atomic_splash.stg");
 	Logger log = Log.getLogger(Atomic.class);
 	System.out.println(group.getInstanceOf("logo_Standard").render());
 	try {(new NetworkServerControl()).start(null);}	catch (Exception e) {System.exit(1);}
