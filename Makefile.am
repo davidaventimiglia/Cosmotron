@@ -22,17 +22,6 @@ JARS = $(shell find lib -name '*.jar' -printf '%p:')
 CLASSPATH = "$(shell $(CYGPATH_PW) $(JARS)$(top_builddir)/java)"
 CLASSPATH_ENV = export CLASSPATH=$(CLASSPATH);
 
-# Default target
-all: atomic cosmotron
-
-# Generate the atomic script.
-atomic: atomic.in atomic.jar
-	sed 's|JARDIR|/usr/local/bin|' atomic.in > atomic
-
-# Generate the cosmotron script.
-cosmotron: cosmotron.in atomic.jar
-	sed 's|JARDIR|/usr/local/bin|' cosmotron.in > cosmotron
-
 # Build the main jar file.
 atomic.jar: classdist_java.stamp
 	if ! test -d scratch ; \

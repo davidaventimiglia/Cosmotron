@@ -1,0 +1,4 @@
+#!/bin/sh
+# Simple script for running the cosmotron program
+DIR="$( cd "$( dirname "$0" )" && pwd )"
+java -cp ${DIR}/atomic.jar Cosmotron

@@ -17,8 +17,6 @@ config.status
 configure.ac~
 derby.log
 aclocal.m4
-atomic
-cosmotron
 *.gz
 autom4te.cache/*
 classdist_java.stamp
