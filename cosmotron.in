@@ -1,2 +1,2 @@
 #!/bin/sh
-java -cp /usr/local/bin/atomic.jar Cosmotron
+java -cp JARDIR/atomic.jar Cosmotron

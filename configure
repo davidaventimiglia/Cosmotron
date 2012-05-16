@@ -568,7 +568,7 @@ ac_unique_file="src/Atomic.java"
 ac_subst_vars='LTLIBOBJS
 LIBOBJS
 JAR
-uudecode
+UUDECODE
 JAVA
 JAVAC
 CYGPATH_PW
@@ -2279,9 +2279,15 @@ case $host_os in #(
 esac
 
 
+if test "x$CLASSPATH" = x; then
+        echo "You have no CLASSPATH, I hope it is good"
+else
+        echo "You have CLASSPATH $CLASSPATH, hope it is correct"
+fi
+
 
 if test "x$JAVAPREFIX" = x; then
-        test "x$JAVAC" = x && for ac_prog in "gcj$EXEEXT -C" guavac$EXEEXT jikes$EXEEXT javac$EXEEXT
+        test "x$JAVAC" = x && for ac_prog in "gcj -C" guavac jikes javac
 do
   # Extract the first word of "$ac_prog", so it can be a program name with args.
 set dummy $ac_prog; ac_word=$2
@@ -2324,7 +2330,7 @@ fi
 done
 
 else
-        test "x$JAVAC" = x && for ac_prog in "gcj$EXEEXT -C" guavac$EXEEXT jikes$EXEEXT javac$EXEEXT
+        test "x$JAVAC" = x && for ac_prog in "gcj -C" guavac jikes javac
 do
   # Extract the first word of "$ac_prog", so it can be a program name with args.
 set dummy $ac_prog; ac_word=$2
@@ -2379,7 +2385,7 @@ else
 JAVA_TEST=Test.java
 CLASS_TEST=Test.class
 cat << \EOF > $JAVA_TEST
-/* #line 2382 "configure" */
+/* #line 2388 "configure" */
 public class Test {
 }
 EOF
@@ -2404,7 +2410,7 @@ $as_echo "$ac_cv_prog_javac_works" >&6; }
 
 
 if test x$JAVAPREFIX = x; then
-        test x$JAVA = x && for ac_prog in kaffe$EXEEXT java$EXEEXT
+        test x$JAVA = x && for ac_prog in kaffe java
 do
   # Extract the first word of "$ac_prog", so it can be a program name with args.
 set dummy $ac_prog; ac_word=$2
@@ -2447,7 +2453,7 @@ fi
 done
 
 else
-        test x$JAVA = x && for ac_prog in kaffe$EXEEXT java$EXEEXT
+        test x$JAVA = x && for ac_prog in kaffe java
 do
   # Extract the first word of "$ac_prog", so it can be a program name with args.
 set dummy $ac_prog; ac_word=$2
@@ -2493,15 +2499,15 @@ test -n "$JAVA" || JAVA="$JAVAPREFIX"
 fi
 test x$JAVA = x && as_fn_error $? "no acceptable Java virtual machine found in \$PATH" "$LINENO" 5
 
-# Extract the first word of "uudecode$EXEEXT", so it can be a program name with args.
-set dummy uudecode$EXEEXT; ac_word=$2
+# Extract the first word of "uudecode", so it can be a program name with args.
+set dummy uudecode; ac_word=$2
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for $ac_word" >&5
 $as_echo_n "checking for $ac_word... " >&6; }
-if ${ac_cv_prog_uudecode+:} false; then :
+if ${ac_cv_prog_UUDECODE+:} false; then :
   $as_echo_n "(cached) " >&6
 else
-  if test -n "$uudecode"; then
-  ac_cv_prog_uudecode="$uudecode" # Let the user override the test.
+  if test -n "$UUDECODE"; then
+  ac_cv_prog_UUDECODE="$UUDECODE" # Let the user override the test.
 else
 as_save_IFS=$IFS; IFS=$PATH_SEPARATOR
 for as_dir in $PATH
@@ -2510,7 +2516,7 @@ do
   test -z "$as_dir" && as_dir=.
     for ac_exec_ext in '' $ac_executable_extensions; do
   if { test -f "$as_dir/$ac_word$ac_exec_ext" && $as_test_x "$as_dir/$ac_word$ac_exec_ext"; }; then
-    ac_cv_prog_uudecode="yes"
+    ac_cv_prog_UUDECODE="no"
     $as_echo "$as_me:${as_lineno-$LINENO}: found $as_dir/$ac_word$ac_exec_ext" >&5
     break 2
   fi
@@ -2520,17 +2526,17 @@ IFS=$as_save_IFS
 
 fi
 fi
-uudecode=$ac_cv_prog_uudecode
-if test -n "$uudecode"; then
-  { $as_echo "$as_me:${as_lineno-$LINENO}: result: $uudecode" >&5
-$as_echo "$uudecode" >&6; }
+UUDECODE=$ac_cv_prog_UUDECODE
+if test -n "$UUDECODE"; then
+  { $as_echo "$as_me:${as_lineno-$LINENO}: result: $UUDECODE" >&5
+$as_echo "$UUDECODE" >&6; }
 else
   { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
 $as_echo "no" >&6; }
 fi
 
 
-if test x$uudecode = xyes; then
+if test x$uudecode != xno; then
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking if uudecode can decode base 64 file" >&5
 $as_echo_n "checking if uudecode can decode base 64 file... " >&6; }
 if ${ac_cv_prog_uudecode_base64+:} false; then :
@@ -2548,10 +2554,10 @@ AAAABQO4AAyxAAAAAQAIAAAACgACAAAACgAEAAsAAQAPABAAAQAHAAAAIQAB
 AAEAAAAFKrcAErEAAAABAAgAAAAKAAIAAAAEAAQABAABABMAAAACABQ=
 ====
 EOF
-if uudecode$EXEEXT Test.uue; then
+if $UUDECODE Test.uue; then
         ac_cv_prog_uudecode_base64=yes
 else
-        echo "configure: 2554: uudecode had trouble decoding base 64 file 'Test.uue'" >&5
+        echo "configure: 2560: uudecode had trouble decoding base 64 file 'Test.uue'" >&5
         echo "configure: failed file was:" >&5
         cat Test.uue >&5
         ac_cv_prog_uudecode_base64=no
@@ -2571,7 +2577,7 @@ $as_echo "$as_me: WARNING: I have to compile Test.class from scratch" >&2;}
         if test x$ac_cv_prog_javac_works = x; then
 
 if test "x$JAVAPREFIX" = x; then
-        test "x$JAVAC" = x && for ac_prog in "gcj$EXEEXT -C" guavac$EXEEXT jikes$EXEEXT javac$EXEEXT
+        test "x$JAVAC" = x && for ac_prog in "gcj -C" guavac jikes javac
 do
   # Extract the first word of "$ac_prog", so it can be a program name with args.
 set dummy $ac_prog; ac_word=$2
@@ -2614,7 +2620,7 @@ fi
 done
 
 else
-        test "x$JAVAC" = x && for ac_prog in "gcj$EXEEXT -C" guavac$EXEEXT jikes$EXEEXT javac$EXEEXT
+        test "x$JAVAC" = x && for ac_prog in "gcj -C" guavac jikes javac
 do
   # Extract the first word of "$ac_prog", so it can be a program name with args.
 set dummy $ac_prog; ac_word=$2
@@ -2669,7 +2675,7 @@ else
 JAVA_TEST=Test.java
 CLASS_TEST=Test.class
 cat << \EOF > $JAVA_TEST
-/* #line 2672 "configure" */
+/* #line 2678 "configure" */
 public class Test {
 }
 EOF
@@ -2704,7 +2710,7 @@ JAVA_TEST=Test.java
 CLASS_TEST=Test.class
 TEST=Test
 cat << \EOF > $JAVA_TEST
-/* [#]line 2707 "configure" */
+/* [#]line 2713 "configure" */
 public class Test {
 public static void main (String args[]) {
         System.exit (0);
@@ -2741,6 +2747,7 @@ rm -fr $JAVA_TEST $CLASS_TEST Test.uue
 fi
 { $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_prog_java_works" >&5
 $as_echo "$ac_cv_prog_java_works" >&6; }
+
 
 
 
