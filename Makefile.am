@@ -1,29 +1,28 @@
-################################################################################
-# Process this file with automake to produce Makefile.in
-################################################################################
+# Include user settings.
+include SETTINGS
 
 # Automake `primary' says to compile *.java files and put results in `classesdir'
-javadir = $(top_builddir)/java
+javadir = $(top_builddir)/$(CLASSESDIR)
 JAVAROOT = $(javadir)
-dist_java_JAVA = $(shell find . -name '*.java')
-
-# Automake `primary' says to put these `scripts' into the ../bin directory
-dist_bin_SCRIPTS = atomic cosmotron atomic.jar
+dist_java_JAVA = $(shell find $(SRCDIR) -name '*.java')
 
 # Debug flags, no warnings, for javac and gcj
-AM_JAVACFLAGS = -g -Wno-all
-AM_GCJFLAGS = -g -nowarn
+AM_JAVACFLAGS = $(JAVAC_FLAGS)
+AM_GCJFLAGS = $(GCJ_FLAGS)
 
-# Automake variable that says also to clean out class files
-CLEANFILES = *.class atomic.jar
+# Automake variable with supplemental items to clean
+CLEANFILES = *.class $(JARFILE)
 
 # Automake variables needed by java and javac
-JARS = $(shell find lib -name '*.jar' -printf '%p:')
-CLASSPATH = "$(shell $(CYGPATH_PW) $(JARS)$(top_builddir)/java)"
+JARS = $(shell find $(LIBDIR) -name '*.jar' -printf '%p:')
+CLASSPATH = "$(shell $(CYGPATH_PW) $(JARS)$(top_builddir)/$(CLASSESDIR))"
 CLASSPATH_ENV = export CLASSPATH=$(CLASSPATH);
 
+# Automake `primary' says to put these `scripts' into the ../bin directory
+dist_bin_SCRIPTS = $(BINFILES)
+
 # Build the main jar file.
-atomic.jar: classdist_java.stamp
+$(JARFILE): classdist_java.stamp
 	if ! test -d scratch ; \
 	then \
 		mkdir scratch ; \
@@ -41,13 +40,5 @@ clean-local:
 	rm -rf scratch
 	rm -rf $(javadir)
 
-# Supplemental dist cleaning rule
-distclean-local:
-	rm -rf Test
-
-# Perform a simple sanity self-test.
-check:
-	@JAVA@ -cp atomic.jar Cosmotron
-
 # Phony targets have no dependencies.
-.PHONY: distclean-local clean-local check
+.PHONY: distclean-local clean-local

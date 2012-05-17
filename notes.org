@@ -13,7 +13,7 @@
     - Also can override properties using java's -D switches.
     - But, provide a command-line parameter so you can specify the properties file.
 *** TODO Figure out how to use InputStreams/OutputStreams with HttpClient.
-*** TODO Possible to compile all resources including dependencies into one Jar file?
+*** DONE Possible to compile all resources including dependencies into one Jar file?
 *** DONE Use CSS to dress up the final HTML a bit.
 *** TODO Start writing Texinfo docs.
 *** TODO Strip out lightweight object model in favor of simple data structures.
@@ -37,5 +37,5 @@
 ******* Else, throw ServletException and/or return 500
 *** TODO Map actual table names to user-visible names.
 *** DONE Create a setenv script
-*** TODO Figure out where to install jar files, if possible
+*** DONE Figure out where to install jar files, if possible
 
