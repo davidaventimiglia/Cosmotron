@@ -48,7 +48,7 @@ public class AtomServlet extends HttpServlet {
 	    if (pathInfo.split("/").length<=1) writeServiceDocument(request, response);
 	    if (pathInfo.split("/").length==3) writeFeed(request, response);}
 	catch (Exception e) {throw new ServletException(e);}}
-    
+
     // Private Helper Methods --------------------------------------------------
 
     private void setupDB () throws ClassNotFoundException {
@@ -60,7 +60,7 @@ public class AtomServlet extends HttpServlet {
 
     private void writeServiceDocument (HttpServletRequest request, HttpServletResponse response) 
 	throws Exception {
-	AtomServiceDocument d = this.getServiceDocument();
+	Map d = this.getServiceDocument();
 	if (d!=null) {
 	    ST t = this.serviceDoc.getInstanceOf("SERVICEDOC");
 	    response.setContentType("application/atomsvc+xml");
@@ -71,7 +71,7 @@ public class AtomServlet extends HttpServlet {
 
     private void writeFeed (HttpServletRequest request, HttpServletResponse response) 
 	throws Exception {
-	AtomFeed f = this.getFeed(("" + request.getPathInfo()).toUpperCase().split("/"));
+	Map f = this.getFeed(("" + request.getPathInfo()).toUpperCase().split("/"));
 	if (f!=null) {
 	    ST t = this.feed.getInstanceOf("FEED");
 	    response.setContentType("application/atom+xml");
@@ -83,87 +83,62 @@ public class AtomServlet extends HttpServlet {
     private DatabaseMetaData getDatabaseMetaData () throws SQLException {
 	return DriverManager.getConnection(config.getInitParameter(JDBCURL)).getMetaData();}
 
-    private AtomServiceDocument getServiceDocument () throws Exception {
-	return new AtomServiceDocument();}
-    
-    private AtomFeed getFeed (String[] pathInfo) throws Exception {
-	return 
-	    this.getDatabaseMetaData().getTables(null, pathInfo[1], pathInfo[2], null).next() ?
-	    new AtomFeed(pathInfo) : null;}
+    private Map getServiceDocument () throws Exception {
+	Map serviceDoc = new HashMap();
+	List workspaces = new ArrayList();
+	ResultSet r = getDatabaseMetaData().getSchemas();
+	while (r.next()) workspaces.add(getWorkSpace(StringEscapeUtils.escapeXml(r.getString(1))));
+	serviceDoc.put("workspaces", workspaces);
+	return serviceDoc;}
 
-    private List<String> getColumnNames (String schema, String table) throws SQLException {
-	List<String> columnNames = new ArrayList<String>();
+    private Map getWorkSpace (String id) throws Exception {
+	Map workspace = new HashMap();
+	List collections = new ArrayList();
+	ResultSet r = getDatabaseMetaData().getTables(null, id, null, null);
+	while (r.next()) collections.add(getCollection(StringEscapeUtils.escapeXml(r.getString(3))));
+	workspace.put("title", id);
+	workspace.put("collections", collections);
+	return workspace;}
+
+    private Map getCollection (String id) {
+	Map collection = new HashMap();
+	collection.put("title", id);
+	collection.put("href", id);
+	collection.put("accepts", new ArrayList());
+	collection.put("categories", new ArrayList());
+	return collection;}
+	
+    private Map getFeed (String[] pathInfo) throws Exception {
+	Map feed = new HashMap();
+	List entries = new ArrayList();
+	List columnNames = getColumnNames(pathInfo[1], pathInfo[2]);
+	ResultSet r = DriverManager
+	    .getConnection(config.getInitParameter(JDBCURL))
+	    .createStatement()
+	    .executeQuery("select * from $SCHEMA$.$TABLE$"
+			  .replace("$SCHEMA$", pathInfo[1])
+			  .replace("$TABLE$", pathInfo[2]));
+	while (r.next()) entries.add(getEntry(pathInfo[1]+"."+pathInfo[2], r, columnNames));
+	feed.put("title", pathInfo[1]);
+	feed.put("href", pathInfo[2]);
+	feed.put("id", pathInfo[1]);
+	feed.put("entries", entries);
+	return feed;}
+
+    private Map getEntry (String id, ResultSet r, List<String> columnNames) throws Exception {
+	Map entry = new HashMap();
+	Map content = new HashMap();
+	for (String name : columnNames) content.put(name, StringEscapeUtils.escapeXml(r.getString(name)));
+	entry.put("id", id);
+	entry.put("title", id);
+	entry.put("content", content);
+	System.out.println(content);
+	return entry;}
+	
+    private List getColumnNames (String schema, String table) throws SQLException {
+	List columnNames = new ArrayList();
 	ResultSet r = getDatabaseMetaData().getColumns(null, schema, table, null);
 	while (r.next()) columnNames.add(r.getString(4));
-	return columnNames;}
+	return columnNames;}}
 
-    // Private Helper Inner Classes --------------------------------------------
-
-    private class AtomServiceDocument {
-	public List<AtomWorkspace> workspaces = new ArrayList<AtomWorkspace>();
-	public AtomServiceDocument () throws Exception {
-	    for (ResultSet r = getDatabaseMetaData().getSchemas(); r.next();)
-		this.workspaces.add(new AtomWorkspace(StringEscapeUtils.escapeXml(r.getString(1))));}}
-
-    private class AtomWorkspace {
-	public String title;
-	public List<AtomCollection> collections = new ArrayList<AtomCollection>();
-	public AtomWorkspace (String workspace) throws Exception {
-	    this.title = workspace;
-	    for (ResultSet r = getDatabaseMetaData().getTables(null, workspace, null, null); r.next();)
-		this.collections.add(new AtomCollection(StringEscapeUtils.escapeXml(r.getString(3))));}}
-
-    private class AtomCollection {
-	public String title;
-	public String href;
-	public List<AtomAccept> accepts = new ArrayList<AtomAccept>();
-	public List<AtomCategory> categories = new ArrayList<AtomCategory>();
-	public AtomCollection (String title) {
-	    this.title = title;
-	    this.href = title;}}
-
-    private class AtomAccept {
-	public String mimetype;
-	public AtomAccept (String mimetype) {
-	    this.mimetype = mimetype;}}
-    
-    private class AtomCategory {
-	public String schema;
-	public String term;
-	public AtomCategory (String schema, String term) {
-	    this.schema = schema;
-	    this.term = term;}}
-    
-    private class AtomFeed {
-	public String title;
-	public String href;
-	public String updated;
-	public String author;
-	public String id;
-	public List<AtomEntry> entries = new ArrayList<AtomEntry>();
-	public AtomFeed (String[] pathInfo) throws Exception {
-	    this.title = pathInfo[1];
-	    this.href = pathInfo[1];
-	    this.id = pathInfo[1];
-	    ResultSet r = DriverManager
-		.getConnection(config.getInitParameter(JDBCURL))
-		.createStatement()
-		.executeQuery("select * from $SCHEMA$.$TABLE$"
-			      .replace("$SCHEMA$", pathInfo[1])
-			      .replace("$TABLE$", pathInfo[2]));
-	    while (r.next()) 
-		this.entries.add(new AtomEntry(pathInfo[1]+"."+pathInfo[2], 
-					       r, getColumnNames(pathInfo[1], pathInfo[2])));}}
-
-    private class AtomEntry {
-	public String id;
-	public String title;
-	public String updated;
-	public Map<String, String> content;
-	public AtomEntry (String id, ResultSet r, List<String> columnNames) throws Exception {
-	    this.id = id;
-	    this.title = id;
-	    this.content = new HashMap<String, String>();
-	    for (String name : columnNames) 
-		this.content.put(name, StringEscapeUtils.escapeXml(r.getString(name)));}}}
 

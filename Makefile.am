@@ -1,5 +1,17 @@
-# Include user settings.
-include SETTINGS
+################################################################################
+# CONFIGURABLE PART
+################################################################################
+
+JARFILE = atomic.jar
+SRCDIR = src
+LIBDIR = lib
+CLASSESDIR = java
+BINFILES = atomic cosmotron $(JARFILE)
+JAVAC_FLAGS = -g -w
+
+################################################################################
+# NON-CONFIGURABLE PART
+################################################################################
 
 # Automake `primary' says to compile *.java files and put results in `classesdir'
 javadir = $(top_builddir)/$(CLASSESDIR)
@@ -8,7 +20,6 @@ dist_java_JAVA = $(shell find $(SRCDIR) -name '*.java')
 
 # Debug flags, no warnings, for javac and gcj
 AM_JAVACFLAGS = $(JAVAC_FLAGS)
-AM_GCJFLAGS = $(GCJ_FLAGS)
 
 # Automake variable with supplemental items to clean
 CLEANFILES = *.class $(JARFILE)
@@ -23,15 +34,14 @@ dist_bin_SCRIPTS = $(BINFILES)
 
 # Build the main jar file.
 $(JARFILE): classdist_java.stamp
-	if ! test -d scratch ; \
-	then \
-		mkdir scratch ; \
-		cd scratch ; \
-		find ../lib/*.jar -exec jar -xf {} \; ; \
-		find . -iname manifest.mf -exec rm {} + ; \
-	fi
-	touch atomic.jar
-	@JAR@ -uf atomic.jar -C ./scratch .
+	if ! test -d scratch ; then \
+	  mkdir scratch ; \
+	  cd scratch ; \
+	  find ../lib/*.jar -exec jar -xf {} \; ; \
+	  find . -iname manifest.mf -exec rm {} + ; fi
+	if ! test -f atomic.jar ; then \
+	  touch atomic.jar ; \
+	  @JAR@ -uf atomic.jar -C ./scratch . ; fi
 	@JAR@ -uf atomic.jar -C $(javadir) .
 	@JAR@ -uf atomic.jar ./atomic_templates
 

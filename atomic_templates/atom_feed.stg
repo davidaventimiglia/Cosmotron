@@ -33,7 +33,7 @@ ENTRY(entry) ::= <<
   $entry.title:TITLE()$
   $entry.updated:UPDATED()$
   $entry.authors:PERSON()$
-  $entry:CONTENT()$
+  $entry.content:CONTENT()$
   $entry.links:LINK()$
   $entry.summary:SUMMARY()$
   $entry.categories:CATEGORY()$
@@ -44,10 +44,12 @@ ENTRY(entry) ::= <<
 </a:entry>
 >>
 
-CONTENT(entry) ::= <<
+CONTENT(content) ::= <<
 <a:content type="application/xml">
+  $content$
+  $content.NAME$
   <properties>
-    $entry.content.keys,entry.content.values:{n,v|$PROPERTY(n, v)$}$
+    $content.keys,content.values:{n,v|$PROPERTY(n, v)$}$
   </properties>
 </a:content>
 >>

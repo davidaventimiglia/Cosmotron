@@ -38,4 +38,5 @@
 *** TODO Map actual table names to user-visible names.
 *** DONE Create a setenv script
 *** DONE Figure out where to install jar files, if possible
+*** TODO Static resources should be served from a configurable location, not the CWD.
 
