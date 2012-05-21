@@ -24,6 +24,7 @@ import org.eclipse.jetty.client.ContentExchange;
 
 public class CosmotronServlet extends HttpServlet {
     public static final long serialVersionUID = 1;
+    public static final String COSMOTRONDATA = "cosmotronData";
 
     private ServletConfig config;
     private HttpClient client;
@@ -33,8 +34,8 @@ public class CosmotronServlet extends HttpServlet {
 
     public void init (ServletConfig config) throws ServletException {
 	try {
-	    this.loadTemplates();
 	    this.config = config;
+	    this.loadTemplates();
 	    this.client = new HttpClient();
 	    this.client.setConnectorType(HttpClient.CONNECTOR_SELECT_CHANNEL);
 	    this.client.start();}
@@ -50,7 +51,9 @@ public class CosmotronServlet extends HttpServlet {
     // Private Helper Methods --------------------------------------------------
 
     private void loadTemplates () {
-	this.group = new STGroupFile("atomic_templates/cosmotron.stg");}
+	String cosmotronData = config.getInitParameter(COSMOTRONDATA);
+	System.out.println("cosmotrondata = " + cosmotronData);
+	this.group = new STGroupFile(cosmotronData + "/cosmotron.stg");}
 
     private void generateResponse (HttpServletRequest request, HttpServletResponse response) 
 	throws Exception {

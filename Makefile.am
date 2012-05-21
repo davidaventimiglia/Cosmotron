@@ -2,13 +2,13 @@
 # CONFIGURABLE PART
 ################################################################################
 
-JARFILE = atomic.jar
+JARFILE = cosmotron.jar
 SRCDIR = src
 LIBDIR = lib
 CLASSESDIR = classes
-BINFILES = atomic cosmotron $(JARFILE)
+BINFILES = cosmotron $(JARFILE)
 JAVAC_FLAGS = -g -w
-TEMPLATEDIR = atomic_templates
+TEMPLATEDIR = cosmotron_templates
 
 ################################################################################
 # NON-CONFIGURABLE PART
@@ -38,7 +38,7 @@ dist_bin_SCRIPTS = $(BINFILES)
 dist_pkgdata_DATA = $(shell find $(TEMPLATEDIR) -name '*.stg') 
 
 # We need this for substitution in sed commands
-atomicdir := $(pkgdatadir)
+cosmotrondir := $(pkgdatadir)
 
 # Build the main jar file.
 $(JARFILE): classdist_java.stamp $(dist_data_DATA)
@@ -47,13 +47,13 @@ $(JARFILE): classdist_java.stamp $(dist_data_DATA)
 	  cd scratch ; \
 	  find ../lib/*.jar -exec jar -xf {} \; ; \
 	  find . -iname manifest.mf -exec rm {} + ; fi
-	if ! test -f atomic.jar ; then \
-	  touch atomic.jar ; \
-	  @JAR@ -uf atomic.jar -C ./scratch . ; fi
-	@JAR@ -uf atomic.jar -C $(javadir) .
+	if ! test -f $(JARFILE) ; then \
+	  touch $(JARFILE) ; \
+	  @JAR@ -uf $(JARFILE) -C ./scratch . ; fi
+	@JAR@ -uf $(JARFILE) -C $(javadir) .
 
-atomic: atomic.in
-	sed 's|PKGDATADIR|$(pkgdatadir)|' atomic.in > atomic
+cosmotron: cosmotron.in
+	sed 's|PKGDATADIR|$(pkgdatadir)|' cosmotron.in > cosmotron
 
 # Supplemental cleaning rule
 clean-local:

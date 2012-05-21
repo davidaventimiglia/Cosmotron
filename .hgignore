@@ -1,6 +1,8 @@
 syntax: glob
 
 atomic.jar
+cosmotron.jar
+*.tmp
 Test/*
 classes/*
 scratch/*

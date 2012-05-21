@@ -1,5 +1,0 @@
-#!/bin/sh
-# Simple script for invoking Atomic
-DIR="$( cd "$( dirname "$0" )" && pwd )"
-export ATOMICDATA=/usr/local/share/atomic
-java -cp ${DIR}/atomic.jar Atomic "org.apache.derby.jdbc.ClientDriver" "jdbc:derby://localhost:1527/Test;create=true" 
