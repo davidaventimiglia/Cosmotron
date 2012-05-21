@@ -1,6 +1,5 @@
 * To do list for Atomic
 *** DONE Make Makefile.am suppress warnings AND work with javac and gcj
-*** TODO Suppress warnings when rebuilding Makefile from Makefile.am
 *** DONE Make Makefile.am move static resources from src into classes
 *** TODO Figure out how to insert an XSL stylesheet link into service and feed documents
 *** TODO Do I need separate XSL stylesheets for service and feed docs, or can I just have one?
@@ -16,7 +15,7 @@
 *** DONE Possible to compile all resources including dependencies into one Jar file?
 *** DONE Use CSS to dress up the final HTML a bit.
 *** TODO Start writing Texinfo docs.
-*** TODO Strip out lightweight object model in favor of simple data structures.
+*** DONE Strip out lightweight object model in favor of simple data structures.
 *** TODO Remove derby jar files, if I can figure out where they are in the standard JDK.
 *** DONE Get access to the log4J facilities.
 *** TODO Maybe suppress Jetty log4J INFO output, if possible.

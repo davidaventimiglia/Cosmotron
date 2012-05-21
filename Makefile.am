@@ -5,9 +5,10 @@
 JARFILE = atomic.jar
 SRCDIR = src
 LIBDIR = lib
-CLASSESDIR = java
+CLASSESDIR = classes
 BINFILES = atomic cosmotron $(JARFILE)
 JAVAC_FLAGS = -g -w
+TEMPLATEDIR = atomic_templates
 
 ################################################################################
 # NON-CONFIGURABLE PART
@@ -32,8 +33,15 @@ CLASSPATH_ENV = export CLASSPATH=$(CLASSPATH);
 # Automake `primary' says to put these `scripts' into the ../bin directory
 dist_bin_SCRIPTS = $(BINFILES)
 
+# Automake `primary' says to put these `architecture-independent data files'
+# in something like /usr/local/share
+dist_pkgdata_DATA = $(shell find $(TEMPLATEDIR) -name '*.stg') 
+
+# We need this for substitution in sed commands
+atomicdir := $(pkgdatadir)
+
 # Build the main jar file.
-$(JARFILE): classdist_java.stamp
+$(JARFILE): classdist_java.stamp $(dist_data_DATA)
 	if ! test -d scratch ; then \
 	  mkdir scratch ; \
 	  cd scratch ; \
@@ -43,7 +51,9 @@ $(JARFILE): classdist_java.stamp
 	  touch atomic.jar ; \
 	  @JAR@ -uf atomic.jar -C ./scratch . ; fi
 	@JAR@ -uf atomic.jar -C $(javadir) .
-	@JAR@ -uf atomic.jar ./atomic_templates
+
+atomic: atomic.in
+	sed 's|PKGDATADIR|$(pkgdatadir)|' atomic.in > atomic
 
 # Supplemental cleaning rule
 clean-local:
@@ -51,4 +61,4 @@ clean-local:
 	rm -rf $(javadir)
 
 # Phony targets have no dependencies.
-.PHONY: distclean-local clean-local
+.PHONY: distclean-local clean-local all

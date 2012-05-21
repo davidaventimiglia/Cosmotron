@@ -10,9 +10,9 @@ import org.stringtemplate.v4.STGroupFile;
 
 public class Atomic {
     public static void main (String[] args) throws Exception{
-	STGroup group = new STGroupFile("atomic_templates/atomic_splash.stg");
+	String atomicData = System.getenv("ATOMICDATA");
+	STGroup group = new STGroupFile(atomicData + "/atomic_splash.stg");
 	Logger log = Log.getLogger(Atomic.class);
-	System.out.println(group.getInstanceOf("logo_Standard").render());
 	try {(new NetworkServerControl()).start(null);}	catch (Exception e) {System.exit(1);}
 	Server s1 = new Server(8180);
 	ServletContextHandler ctx1 = new ServletContextHandler(ServletContextHandler.SESSIONS);
@@ -21,6 +21,8 @@ public class Atomic {
 	ServletHolder h1 = new ServletHolder(new AtomServlet());
 	h1.setInitParameter(AtomServlet.JDBCDRIVER, args[0]);
 	h1.setInitParameter(AtomServlet.JDBCURL, args[1]);
+	System.out.println(atomicData);
+	h1.setInitParameter(AtomServlet.ATOMICDATA, atomicData);
         ctx1.addServlet(h1, "/atomic/*");
 	s1.start();
 	log.info(group.getInstanceOf("ready").render());

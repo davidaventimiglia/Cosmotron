@@ -26,6 +26,7 @@ public class AtomServlet extends HttpServlet {
     public static final long serialVersionUID = 1;
     public static final String JDBCDRIVER = "JDBCDRIVER";
     public static final String JDBCURL = "JDBCURL";
+    public static final String ATOMICDATA = "atomicData";
 
     private ServletConfig config;
     private STGroup serviceDoc;
@@ -55,8 +56,9 @@ public class AtomServlet extends HttpServlet {
 	Class.forName(this.config.getInitParameter(JDBCDRIVER));}
     
     private void loadTemplates () {
-	this.serviceDoc = new STGroupFile("atomic_templates/atom_service_document.stg");
-	this.feed = new STGroupFile("atomic_templates/atom_feed.stg");}
+	String atomicData = config.getInitParameter(ATOMICDATA);
+	this.serviceDoc = new STGroupFile(atomicData + "/atom_service_document.stg");
+	this.feed = new STGroupFile(atomicData + "/atom_feed.stg");}
 
     private void writeServiceDocument (HttpServletRequest request, HttpServletResponse response) 
 	throws Exception {
