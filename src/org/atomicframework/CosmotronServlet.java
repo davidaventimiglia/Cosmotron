@@ -52,7 +52,6 @@ public class CosmotronServlet extends HttpServlet {
 
     private void loadTemplates () {
 	String cosmotronData = config.getInitParameter(COSMOTRONDATA);
-	System.out.println("cosmotrondata = " + cosmotronData);
 	this.group = new STGroupFile(cosmotronData + "/cosmotron.stg");}
 
     private void generateResponse (HttpServletRequest request, HttpServletResponse response) 

@@ -33,10 +33,6 @@ CLASSPATH_ENV = export CLASSPATH=$(CLASSPATH);
 # Automake `primary' says to put these `scripts' into the ../bin directory
 dist_bin_SCRIPTS = $(BINFILES)
 
-# Automake `primary' says to put these `architecture-independent data files'
-# in something like /usr/local/share
-dist_pkgdata_DATA = $(shell find $(TEMPLATEDIR) -name '*.stg') 
-
 # We need this for substitution in sed commands
 cosmotrondir := $(pkgdatadir)
 
@@ -59,6 +55,14 @@ cosmotron: cosmotron.in
 clean-local:
 	rm -rf scratch
 	rm -rf $(javadir)
+
+install-data-local:
+	mkdir -p $(pkgdatadir)
+	cp -rf $(srcdir)/templates $(pkgdatadir)
+	cp -rf $(srcdir)/content $(pkgdatadir)
+
+uninstall-local:
+	rm -rf $(pkgdatadir)
 
 # Phony targets have no dependencies.
 .PHONY: distclean-local clean-local all
