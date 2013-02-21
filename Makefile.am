@@ -37,7 +37,7 @@ dist_bin_SCRIPTS = $(BINFILES)
 cosmotrondir := $(pkgdatadir)
 
 # Build the main jar file.
-$(JARFILE): classdist_java.stamp $(dist_data_DATA)
+$(JARFILE): classjava.stamp $(dist_data_DATA)
 	if ! test -d scratch ; then \
 	  mkdir scratch ; \
 	  cd scratch ; \
