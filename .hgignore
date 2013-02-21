@@ -25,3 +25,5 @@ autom4te.cache/*
 classdist_java.stamp
 java/*.class
 *.class
+classjava.stamp
+cosmotron
