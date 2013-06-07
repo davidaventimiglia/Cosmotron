@@ -1,6 +1,6 @@
 body {
     background-color: black;
-    color: white;
+    color: silver;
 }
 
 frameset {
@@ -41,10 +41,18 @@ ul {
     display: block;
 }
 
-ul ul {
+ul li ul {
     display: none;
 }
 
-ul:hover ul {
-    display: block;
+li {
+    cursor: hand;
+}
+
+li:hover {
+    color: white;
+}
+
+ul li:hover ul {
+    display: inline;
 }

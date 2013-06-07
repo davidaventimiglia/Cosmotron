@@ -27,3 +27,4 @@ java/*.class
 *.class
 classjava.stamp
 cosmotron
+*.*~

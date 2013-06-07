@@ -11,18 +11,18 @@
       <body>
 	<ul>
  	  <xsl:for-each select="p:service/p:workspace">
-	      <li id="{a:title}" class="workspace">
-		<xsl:value-of select="a:title"/>
-	      </li>
+	    <li id="{a:title}" class="workspace">
+	      <xsl:value-of select="a:title"/>
 	      <ul>
- 	      <xsl:for-each select="p:collection">
-		<li id="{a:title}" class="collection">
-		  <a href="{@href}" target="right">
-		    <xsl:value-of select="a:title"/>
-		  </a>
-		</li>
-	      </xsl:for-each>
+ 		<xsl:for-each select="p:collection">
+		  <li id="{a:title}" class="collection">
+		    <a href="{@href}" target="right">
+		      <xsl:value-of select="a:title"/>
+		    </a>
+		  </li>
+		</xsl:for-each>
 	      </ul>
+	    </li>
 	  </xsl:for-each>
 	</ul>
       </body>

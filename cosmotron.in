@@ -2,4 +2,4 @@
 # Simple script for running the cosmotron program
 DIR="$( cd "$( dirname "$0" )" && pwd )"
 export COSMOTRONDATA=PKGDATADIR
-java -cp ${DIR}/cosmotron.jar Cosmotron
+java -cp ${DIR}/cosmotron.jar Cosmotron $@

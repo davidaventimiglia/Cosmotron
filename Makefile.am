@@ -1,68 +1,41 @@
-################################################################################
-# CONFIGURABLE PART
-################################################################################
+JAR_FILE = cosmotron.jar
+SRC_DIR = src
+LIB_DIR = lib
+OBJ_DIR = classes
+BIN_FILE = cosmotron
+JAVAC_FLAGS = -g
 
-JARFILE = cosmotron.jar
-SRCDIR = src
-LIBDIR = lib
-CLASSESDIR = classes
-BINFILES = cosmotron $(JARFILE)
-JAVAC_FLAGS = -g -w
-TEMPLATEDIR = cosmotron_templates
+$(shell mkdir -p $(OBJ_DIR))
+$(shell cd src ; find . -type f ! -iname '*.java' -exec cp --parents -u {} ../$(OBJ_DIR) \;)
 
-################################################################################
-# NON-CONFIGURABLE PART
-################################################################################
-
-# Automake `primary' says to compile *.java files and put results in `classesdir'
-javadir = $(top_builddir)/$(CLASSESDIR)
+dist_bin_SCRIPTS = $(BIN_FILE) $(JAR_FILE)
+dist_java_JAVA := $(shell find $(SRC_DIR) -name '*.java' )
+javadir = $(top_builddir)/$(OBJ_DIR)
 JAVAROOT = $(javadir)
-dist_java_JAVA = $(shell find $(SRCDIR) -name '*.java')
-
-# Debug flags, no warnings, for javac and gcj
 AM_JAVACFLAGS = $(JAVAC_FLAGS)
-
-# Automake variable with supplemental items to clean
-CLEANFILES = *.class $(JARFILE)
-
-# Automake variables needed by java and javac
-JARS = $(shell find $(LIBDIR) -name '*.jar' -printf '%p:')
-CLASSPATH = "$(shell $(CYGPATH_PW) $(JARS)$(top_builddir)/$(CLASSESDIR))"
+CLEANFILES = *.class $(JAR_FILE) $(BIN_FILE)
+LIBS := $(shell find $(LIB_DIR) -name '*.jar' -printf '%p:')
+CLASSPATH := $(shell $(CYGPATH_PW) $(LIBS)$(top_builddir)/$(OBJ_DIR))
 CLASSPATH_ENV = export CLASSPATH=$(CLASSPATH);
+NEWEST_LIB := $(shell find lib -type f -iname '*.jar' -printf '%C@\n' | sort | tail -n 1)
 
-# Automake `primary' says to put these `scripts' into the ../bin directory
-dist_bin_SCRIPTS = $(BINFILES)
+$(BIN_FILE): cosmotron.in
+	sed 's|PKGDATADIR|$(pkgdatadir)|' $< > $@
+	chmod a+x $@
 
-# We need this for substitution in sed commands
-cosmotrondir := $(pkgdatadir)
+$(JAR_FILE): classjava.stamp $(LIB_DIR) $(OBJ_DIR)/$(NEWEST_LIB)
+	touch $@
+	@JAR@ -uf $@ -C $(OBJ_DIR) .
 
-# Build the main jar file.
-$(JARFILE): classjava.stamp $(dist_data_DATA)
-	if ! test -d scratch ; then \
-	  mkdir scratch ; \
-	  cd scratch ; \
-	  find ../lib/*.jar -exec jar -xf {} \; ; \
-	  find . -iname manifest.mf -exec rm {} + ; fi
-	if ! test -f $(JARFILE) ; then \
-	  touch $(JARFILE) ; \
-	  @JAR@ -uf $(JARFILE) -C ./scratch . ; fi
-	@JAR@ -uf $(JARFILE) -C $(javadir) .
+$(OBJ_DIR)/$(NEWEST_LIB):
+	cd $(OBJ_DIR) ; find ../$(LIB_DIR)/*.jar -exec @JAR@ -xf {} \; ; find . -iname MANIFEST.MF -exec rm {} +
+	touch $@
 
-cosmotron: cosmotron.in
-	sed 's|PKGDATADIR|$(pkgdatadir)|' cosmotron.in > cosmotron
-
-# Supplemental cleaning rule
 clean-local:
-	rm -rf scratch
-	rm -rf $(javadir)
+	rm -rf $(OBJ_DIR)
 
 install-data-local:
 	mkdir -p $(pkgdatadir)
 	cp -rf $(srcdir)/templates $(pkgdatadir)
-	cp -rf $(srcdir)/content $(pkgdatadir)
 
-uninstall-local:
-	rm -rf $(pkgdatadir)
-
-# Phony targets have no dependencies.
 .PHONY: distclean-local clean-local all

@@ -1,3 +1,5 @@
+delimiters "$", "$"
+
 logo_Standard() ::= <<
 
 
@@ -11,16 +13,13 @@ logo_Standard() ::= <<
                        
                      1.0, http://www.atomicframework.org
 
-
-
-
 >>
 
 starting() ::= <<
 COSMOTRON is starting
 >>
 
-ready() ::= <<
-COSMOTRON is ready
+ready(port) ::= <<
+                     COSMOTRON is listening on port $port$.
 >>
 
