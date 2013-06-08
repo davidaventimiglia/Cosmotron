@@ -12,4 +12,12 @@
     - [ ] copies in missing files (COPYING, etc.)
     - [ ] touches README, NEWS, AUTHORS, ChangeLog, etc.
 
-*** TODO 
+*** TODO Prune obsolete heads from Bitbucket and do the same in Atomic.
+*** TODO Now that I figured out how to do XSLT (In Atomic, though I'm not using that anymore), put that into Cosmotron.
+*** TODO Use the reflective features to be added to Atomic in order to figure out how to generate a form dynamically.
+*** TODO Should be able to add new rows to a table.
+*** TODO And delete existing rows.
+* Development Environment notes
+*** Needs autoconf-archive installed
+*** After installing autoconf-archive, may need to do autoreconf
+*** Doesn't compile with gcj, only with a javac compatible compiler.
