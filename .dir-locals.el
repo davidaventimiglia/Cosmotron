@@ -4,5 +4,11 @@
 ((nil
   (compile-command . (concat "make -k -C " (let ((l (dir-locals-find-file (or (buffer-file-name) default-directory)))) (if (listp l) (car l) l)))))
  (java-mode
-  (eval . (setq semanticdb-javap-classpath (directory-files (concat (let ((l (dir-locals-find-file (or (buffer-file-name) default-directory)))) (if (listp l) (car l) l)) "lib") t ".*\.jar")))))
-
+  (eval . (ede-java-root-project "COSMOTRON"
+		       :name "cosmotron"
+		       :version "1.0"
+		       :mailinglist "dventimi@gmail.com"
+		       :web-site-url "http://www.neptunestation.org"
+		       :file "/home/dventimi/work/cosmotron/README"
+		       :srcroot '("src")
+		       :localclasspath nil))))
