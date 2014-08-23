@@ -1,0 +1,14 @@
+dist_pkgdata_DATA = @PACKAGE@.jar
+EXTRA_DIST = $(SOURCES)
+CLEANFILES = @PACKAGE@.jar jarargs
+
+@PACKAGE@.jar: $(SOURCES) Makefile
+mkdir -p $(abs_builddir)/.jarroot
+-rm -f jarargs
+for f in $^; do if [ $${f: -5} == ".java" ]; then echo $$f >> jarargs; fi; done
+@JAVAC@ $(JAVACFLAGS) $(AM_JAVACFLAGS) -d $(abs_builddir)/.jarroot -sourcepath $(srcdir) -cp $(CLASSPATH) @jarargs
+cd $(srcdir); for f in $(SOURCES); do if [[ $${f: -5} != ".java" ]]; then cp --parents $$f $(abs_builddir)/.jarroot; chmod -R u+w $(abs_builddir)/.jarroot; fi; done
+@JAR@ -cf $(abs_builddir)/$@ -C $(abs_builddir)/.jarroot .
+
+clean-local:
+-rm -rf $(abs_builddir)/.jarroot
