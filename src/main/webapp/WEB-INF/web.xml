@@ -5,10 +5,14 @@
          xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
          id="WebApp_ID" version="2.5">
 
-  <display-name>org.atomicframework.cosmotron</display-name>
+  <display-name>Cosmotron</display-name>
+  <description>Java EE Web Application Client for the Atomic Microservice</description>
+  <!-- <icon> -->
+  <!--   <small-icon>atomic16x16.png</small-icon> -->
+  <!--   <large-icon>atomic32x32.png</large-icon> -->
+  <!-- </icon> -->
 
   <welcome-file-list>
-    <welcome-file>index.html</welcome-file>
+    <welcome-file>index.jsp</welcome-file>
   </welcome-file-list>
-
 </web-app>
