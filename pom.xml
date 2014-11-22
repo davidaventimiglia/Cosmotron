@@ -24,7 +24,7 @@
 	<configuration>
 	  <url>http://localhost:8080/manager/text</url>
 	  <server>TomcatServer</server>
-	  <path>/atomic-webapp</path>
+	  <path>/cosmotron-webapp</path>
 	</configuration>
       </plugin>
     </plugins>
@@ -32,9 +32,10 @@
 
   <dependencies>
     <dependency>
-      <groupId>org.atomicframework</groupId>
-      <artifactId>atomic-core</artifactId>
-      <version>1.0.0</version>
+      <groupId>org.apache.olingo</groupId>
+      <artifactId>olingo-odata2-api</artifactId>
+      <version>2.0.0</version>
+      <scope>compile</scope>
     </dependency>
   </dependencies>
 </project>
