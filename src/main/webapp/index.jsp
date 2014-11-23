@@ -1,10 +1,13 @@
 <%@ page contentType="text.html; charset=UTF-8"%>
 <%@ page pageEncoding="UTF-8"%>
+<%@ taglib prefix="my" uri="http://www.neptunestation.com/cosmotron-tags"%>
 <html>
   <head>
     <title>Cosmotron</title>
   </head>
   <body>
-    <h1>Cosmotron<h1>
+    <h1>Cosmotron</h1>
+    <p>Hello?</p>
+    <p>${my:helloWorld("Hello")}</p>
   </body>
 </html>
