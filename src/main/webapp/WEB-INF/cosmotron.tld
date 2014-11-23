@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<taglib xmlns="http://java.sun.com/xml/ns/j2ee"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-jsptaglibrary_2_0.xsd"
+        version="2.0">
+  <description>Tag library for Cosmotron</description>
+  <tlib-version>1.0</tlib-version>
+  <short-name>CosmotronTagLibrary</short-name>
+  <uri>http://www.neptunestation.com/cosmotron</uri>
+  <function>
+    <description>Outputs Hello, World</description>
+    <name>helloWorld</name>
+    <function-class>com.neptunestation.cosmotron.HelloWorld</function-class>
+    <function-signature>java.lang.String reverse( java.lang.String )</function-signature>
+  </function>
+</taglib>
