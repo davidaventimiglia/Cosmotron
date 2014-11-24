@@ -11,6 +11,6 @@
     <description>Outputs Hello, World</description>
     <name>helloWorld</name>
     <function-class>com.neptunestation.cosmotron.HelloWorld</function-class>
-    <function-signature>java.lang.String hello( java.lang.String )</function-signature>
+    <function-signature>java.lang.String hello(java.lang.String)</function-signature>
   </function>
 </taglib>
