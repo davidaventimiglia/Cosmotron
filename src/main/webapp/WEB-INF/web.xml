@@ -15,7 +15,7 @@
 
   <servlet-mapping>
     <servlet-name>CosmotronServlet</servlet-name>
-    <url-pattern>/*</url-pattern>
+    <url-pattern>/cosmotron</url-pattern>
   </servlet-mapping>
 
 </web-app>
