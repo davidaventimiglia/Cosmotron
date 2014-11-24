@@ -7,7 +7,6 @@
   </head>
   <body>
     <h1>Cosmotron</h1>
-    <p>Hello?</p>
-    <p>${my:helloWorld("Hello")}</p>
+    <p>${my:helloWorld("World")}</p>
   </body>
 </html>
