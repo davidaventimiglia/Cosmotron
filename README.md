@@ -7,13 +7,7 @@ ODATA data sources.
 
 * Run `mvn install`.
 
-### Contribution guidelines ###
-
-* Writing tests
-* Code review
-* Other guidelines
-
 ### Who do I talk to? ###
 
-* Cosmotron is developed at
-  [NeptuneStation](http://www.neptunestation.com/).
+* Cosmotron is developed by David A. Ventimiglia <davidaventimiglia@neptunestation.com>.
+
